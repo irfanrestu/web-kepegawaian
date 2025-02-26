@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('rwytjabatan', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_jabatan');
+            $table->string('satuan_kerja');
+            $table->date('tmt_jabatan');
+            $table->string('nama_file', 100);
             $table->timestamps();
         });
     }
