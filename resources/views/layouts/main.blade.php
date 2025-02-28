@@ -279,7 +279,8 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
+      <!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
@@ -287,7 +288,7 @@
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="{{ route('index.index') }}">
+            <a href="{{ route('biodata.index') }}">
               <i class="bi bi-circle"></i><span>Biodata</span>
             </a>
           </li>
@@ -308,8 +309,15 @@
           </li>
         </ul>
       </li>
-
+      <!-- End Data Pegawai Nav -->
     
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('post.index') }}" >
+          <i class="bi bi-journal-text"></i><span>Post Artikel</span>
+        </a>
+        </ul>
+      </li>
+      <!-- End Post Artikel Nav -->
 
     </ul>
 
