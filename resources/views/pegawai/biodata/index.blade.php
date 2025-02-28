@@ -27,7 +27,7 @@
                             <div class="card mb-4">
                             <div class="card-header">
 
-                            <a href="{{ route('index.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
+                            <a href="{{ route('biodata.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
                             
                                 <i class="fas fa-table me-1"></i>
                                 DataTable Example
@@ -60,8 +60,8 @@
                                             <td> {{ $p->no_tlp }} </td>
                                             <td> {{ $p->alamat }} </td>
                                             <td>
-                                                <a href="/pegawai/{{$p->id}}/profile" class="btn btn-sm btn-info">Profile</a>
-                                                <a href="{{ route('index.edit', $p->id) }}" class="btn btn-sm btn-success">edit</a>
+                                                <a href="{{ route('biodata.profile', $p->id) }}" class="btn btn-sm btn-info">Profile</a>
+                                                <a href="{{ route('biodata.edit', $p->id) }}" class="btn btn-sm btn-success">edit</a>
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{$p->id}}">
                                                 Hapus
                                                 </button>
@@ -81,7 +81,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                                                        <form action="{{ route('index.destroy', $p->id) }}" method="POST" style="display:inline;">
+                                                        <form action="{{ route('biodata.destroy', $p->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">Delete</button>

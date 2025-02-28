@@ -12,7 +12,7 @@
                 Tambah data
             </div>
             <div class="card-body">
-                <form action="{{ Route('index.store') }}" method="POST" >
+                <form action="{{ Route('biodata.store') }}" method="POST" >
                     @csrf
                     <div class="form-group">
                         <label for="nama">Nama:</label>

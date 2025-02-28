@@ -17,13 +17,13 @@ class PegawaiController extends Controller
         }
 
         
-        return view('pegawai.index', compact('pegawai'));
+        return view('pegawai.biodata.index', compact('pegawai'));
     }
 
     public function create()
     {
 
-        return view('pegawai.create'); 
+        return view('pegawai.biodata.create'); 
         
     }
 
@@ -57,20 +57,14 @@ class PegawaiController extends Controller
 
         Pegawai::create($request->all());
 
-        return redirect('/pegawai')->with('status','Pegawai berhasil dibuat');
+        return redirect('/pegawai/biodata')->with('status','Pegawai berhasil dibuat');
     }
 
-    public function show()
-    {
-
-        return view('pegawai.show'); 
-        
-    }
 
     public function edit(Pegawai $id)
     {
 
-        return view('pegawai.edit', compact('id')); 
+        return view('pegawai.biodata.edit', compact('id')); 
         
     }
 
@@ -112,14 +106,14 @@ class PegawaiController extends Controller
             'alamat'=>$request->alamat,
         ]);
         
-        return redirect()->route('index.index');
+        return redirect()->route('biodata.index');
     }
 
     public function destroy(Pegawai $id)
     {
         $id->delete();
     
-        return redirect()->route('index.index')
+        return redirect()->route('biodata.index')
                 ->with('success','Data berhasil di hapus' ); 
         
     }
@@ -127,6 +121,6 @@ class PegawaiController extends Controller
     public function profile($id)
     {
         $pegawai = \App\Models\Pegawai::find($id);
-        return view('pegawai.profile',['pegawai' => $pegawai]);
+        return view('pegawai.biodata.profile',['pegawai' => $pegawai]);
     }
 }

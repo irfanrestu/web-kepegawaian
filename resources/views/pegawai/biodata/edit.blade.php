@@ -12,7 +12,7 @@
                 Edit data
             </div>
             <div class="card-body">
-                <form action="{{ Route('index.update', $id->id) }}" method="POST" >
+                <form action="{{ Route('biodata.update', $id->id) }}" method="POST" >
                     @csrf
                     @method('put')
                     <div class="form-group">
