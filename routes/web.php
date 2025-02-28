@@ -4,10 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
-    return view('home');
+    return view('homepage.index');
 });
+
 
 Route::get('/login',[AuthController::class, 'login'])->name('login');
 Route::post('/postlogin',[AuthController::class, 'postlogin'])->name('login.postlogin');
