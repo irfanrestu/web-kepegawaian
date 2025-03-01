@@ -26,8 +26,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     // Akhir bagian halaman Dashboard
 
-    // Rute Data pegawai
-    Route::get('/pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');
+    // Rute Data Biodata pegawai Tab
+    Route::get('/data_pegawai', [PegawaiController::class, 'index1'])->name('data_pegawai.index');
+
+    // Rute Data Biodata pegawai
+    Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');    
     Route::get('/pegawai/biodata/create', [PegawaiController::class, 'create'])->name('biodata.create');
     Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
     Route::get('/pegawai/biodata/edit{id}', [PegawaiController::class, 'edit'])->name('biodata.edit');

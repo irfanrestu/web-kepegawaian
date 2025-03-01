@@ -123,4 +123,24 @@ class PegawaiController extends Controller
         $pegawai = \App\Models\Pegawai::find($id);
         return view('pegawai.biodata.profile',['pegawai' => $pegawai]);
     }
+
+    //Bagian Data_pegawai Tabs
+    public function index1(Request $request)
+    {
+        if($request->has('cari')){
+            $pegawai = Pegawai::where('nama','LIKE','%'.$request->cari.'%')->get();
+        }else{
+            $pegawai = Pegawai::all();
+        }
+
+        
+        return view('data_pegawai.index', compact('pegawai'));
+    }
+
+    public function index2()
+    {
+        //
+    }
+
+
 }

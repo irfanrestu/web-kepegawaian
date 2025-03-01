@@ -12,6 +12,13 @@
         <!-- End Dashboard Nav -->
 
         <li class="nav-item">
+            <a class="nav-link"  href="{{ route('data_pegawai.index') }}">
+                <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span>
+            </a>
+        </li>
+        <!-- End Data Pegawai Nav Admin -->
+
+        <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#"
                 aria-expanded="false">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span><i
@@ -40,7 +47,7 @@
                 </li>
             </ul>
         </li>
-        <!-- End Data Pegawai Nav -->
+        <!-- End Data Pegawai Nav Pegawai -->
 
         <li class="nav-item">
             <a class="nav-link " href="{{ route('dashboard.index') }}">
