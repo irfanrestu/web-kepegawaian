@@ -3,7 +3,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Biodata</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -17,49 +17,40 @@
       <div class="row">
         <div class="col-lg-12">
 
-          <div class="card">
-          <div class="container-fluid px-4">
-                        <h1 class="mt-4">Data Pegawai</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                        <div class="row">
-                            <div class="card mb-4">
-                            <div class="card-header">
+        <div class="card">
+          
+            <div class="card">
+                <div class="card-body">
+                <h5 class="card-title">Table Biodata Pegawai</h5>
 
-                            <a href="{{ route('biodata.create') }}" class="btn btn-sm btn-primary">Tambah Data</a>
-                            
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>NO</th>
-                                            <th>Nama</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Tempat Lahir</th>
-                                            <th>Tanggak Lahir</th>
-                                            <th>Email</th>
-                                            <th>No Telepon</th>
-                                            <th>Alamat</th>
-                                            <th width="280px">Action</th>
-                                        </tr>
-                                    </thead>
-                                   
-                                    <tbody>
-                                        @foreach ($pegawai as $p )
-                                        <tr>
-                                            <td> {{ $loop->iteration }} </td>
-                                            <td><a href="/pegawai/{{$p->id}}/profile">{{ $p->nama }}</a> </td>
-                                            <td> {{ $p->jenis_kelamin }} </td>
-                                            <td> {{ $p->tempat_lahir }} </td>
-                                            <td> {{ $p->tanggal_lahir }} </td>
-                                            <td> {{ $p->email }} </td>
-                                            <td> {{ $p->no_tlp }} </td>
-                                            <td> {{ $p->alamat }} </td>
-                                            <td>
+                <!-- Table with hoverable rows -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">NO</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Tempat Lahir</th>
+                            <th scope="col">Tanggak Lahir</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">No Telepon</th>
+                            <th scope="col">Alamat</th>
+                            <th scope="col" width="280px">Action</th>
+                        </tr>
+                    
+                    </thead>
+                    <tbody>
+                        @foreach ($pegawai as $p )
+                        <tr>
+                            <th scope="row"> {{ $loop->iteration }} </th>
+                            <td><a href="/pegawai/{{$p->id}}/profile">{{ $p->nama }}</a> </td>
+                            <td> {{ $p->jenis_kelamin }} </td>
+                            <td> {{ $p->tempat_lahir }} </td>
+                            <td> {{ $p->tanggal_lahir }} </td>
+                            <td> {{ $p->email }} </td>
+                            <td> {{ $p->no_tlp }} </td>
+                            <td> {{ $p->alamat }} </td>
+                            <td>
                                                 <a href="{{ route('biodata.profile', $p->id) }}" class="btn btn-sm btn-info">Profile</a>
                                                 <a href="{{ route('biodata.edit', $p->id) }}" class="btn btn-sm btn-success">edit</a>
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{$p->id}}">
@@ -93,17 +84,19 @@
                                                     </div>
                                                 
                                                 </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-          </div>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <!-- End Table with hoverable rows -->
+
+                </div>
+            </div>
+                        
+          
 
         </div>
       </div>
     </section>
-
-  </main>@endsection
+</main>
+  @endsection
