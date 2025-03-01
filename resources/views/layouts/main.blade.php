@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="{{asset('admin/assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -283,8 +285,10 @@
       <!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#"
+          aria-expanded="false">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span><i
+            class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
@@ -293,7 +297,7 @@
             </a>
           </li>
           <li>
-            <a href="tables-data.html">
+            <a href="{{ route('riwayat_jabatan.index') }}">
               <i class="bi bi-circle"></i><span>Riwayat Jabatan</span>
             </a>
           </li>
@@ -310,23 +314,30 @@
         </ul>
       </li>
       <!-- End Data Pegawai Nav -->
-    
+
       <li class="nav-item">
-        <a class="nav-link" href="{{ route('post.index') }}" >
+        <a class="nav-link " href="{{ route('dashboard.index') }}">
+          <i class="bi bi-grid"></i>
+          <span>Profil</span>
+        </a>
+      </li>
+      <!-- End Profil Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link" href="{{ route('post.index') }}">
           <i class="bi bi-journal-text"></i><span>Post Artikel</span>
         </a>
-        </ul>
-      </li>
-      <!-- End Post Artikel Nav -->
+    </ul>
+    </li>
+    <!-- End Post Artikel Nav -->
 
     </ul>
 
   </aside>
   <!-- End Sidebar-->
 
-  
 
-    @yield('content')
+  @yield('content')
 
   <!-- End #main -->
 
@@ -344,7 +355,8 @@
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="{{asset('admin/assets/vendor/apexcharts/apexcharts.min.js')}}"></script>
