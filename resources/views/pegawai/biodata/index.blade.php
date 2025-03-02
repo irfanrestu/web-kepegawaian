@@ -43,7 +43,7 @@
                         @foreach ($pegawai as $p )
                         <tr>
                             <th scope="row"> {{ $loop->iteration }} </th>
-                            <td><a href="/pegawai/{{$p->id}}/profile">{{ $p->nama }}</a> </td>
+                            <td><a href="/pegawai/{{$p->pegawai_id}}/profile">{{ $p->nama }}</a> </td>
                             <td> {{ $p->jenis_kelamin }} </td>
                             <td> {{ $p->tempat_lahir }} </td>
                             <td> {{ $p->tanggal_lahir }} </td>
@@ -51,14 +51,14 @@
                             <td> {{ $p->no_tlp }} </td>
                             <td> {{ $p->alamat }} </td>
                             <td>
-                                                <a href="{{ route('biodata.profile', $p->id) }}" class="btn btn-sm btn-info">Profile</a>
-                                                <a href="{{ route('biodata.edit', $p->id) }}" class="btn btn-sm btn-success">edit</a>
+                                                <a href="{{ route('biodata.profile', $p->pegawai_id) }}" class="btn btn-sm btn-info">Profile</a>
+                                                <a href="{{ route('biodata.edit', $p->pegawai_id) }}" class="btn btn-sm btn-success">edit</a>
                                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal{{$p->id}}">
                                                 Hapus
                                                 </button>
                                                 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="exampleModal{{$p->id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                <div class="modal fade" id="exampleModal{{$p->pegawai_id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -72,7 +72,7 @@
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
-                                                        <form action="{{ route('biodata.destroy', $p->id) }}" method="POST" style="display:inline;">
+                                                        <form action="{{ route('biodata.destroy', $p->pegawai_id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger">Delete</button>
