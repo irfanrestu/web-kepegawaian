@@ -60,10 +60,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Akhir bagian halaman Riwayat Pendidikan
 
     Route::get('/dokumen_pendukung', [DokumenController::class, 'index'])->name('dokumen_pendukung.index');
-    Route::get('/dokumen_pendukung/create', [DokumenController::class, 'create'])->name('dokumen_pendukung.create');
-    Route::post('/dokumen_pendukung/store', [DokumenController::class, 'store'])->name('dokumen_pendukung.store');
-    Route::get('/dokumen_pendukung/edit{id}', [DokumenController::class, 'edit'])->name('dokumen_pendukung.edit');
-    Route::put('/dokumen_pendukung/update{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
+    Route::put('/dokumen_pendukung/update/{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
     Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
     //Akhir bagian halaman Dokumen Pendukung
 

@@ -16,11 +16,15 @@ class DokumenController extends Controller
      */
     public function index(Request $request)
     {
-        $dokumens = Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
-            ->with('kategoriDokumen')
-            ->get();
+        // Ambil semua kategori dokumen
+        $kategoriDokumens = KategoriDokumen::all();
 
-        return view('dokumen_pendukung.index', compact('dokumens'));
+        // Ambil dokumen yang sudah diupload oleh pengguna yang sedang login
+        $uploadedDokumens = Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
+            ->pluck('file_dokumen', 'id_kategori_dokumen')
+            ->toArray();
+
+        return view('dokumen_pendukung.index', compact('kategoriDokumens', 'uploadedDokumens'));
     }
 
     /**
@@ -94,14 +98,7 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen, $id)
     {
-        $dokumen = Dokumen::findOrFail($id);
-
-        // Pastikan hanya pemilik dokumen yang bisa mengedit
-        if ($dokumen->id_pegawai !== auth()->user()->id_pegawai) {
-            abort(403, 'Anda tidak memiliki akses untuk mengedit dokumen ini.');
-        }
-
-        return view('dokumen_pendukung.edit', compact('dokumen'));
+        //
     }
 
     /**
@@ -109,38 +106,60 @@ class DokumenController extends Controller
      */
     public function update(Request $request, Dokumen $dokumen, $id)
     {
-        $dokumen = Dokumen::findOrFail($id);
-
-        // Pastikan hanya pemilik dokumen yang bisa mengedit
-        if ($dokumen->id_pegawai !== auth()->user()->id_pegawai) {
-            abort(403, 'Anda tidak memiliki akses untuk mengedit dokumen ini.');
-        }
-
-        // Validasi hanya untuk file
-        $request->validate([
-            'file' => 'nullable|file|mimes:png,jpg,pdf|max:2048',
+        $validator = \Validator::make($request->all(), [
+            'file' => [
+                'required',
+                'file',
+                'mimes:png,jpg,pdf',
+                function ($attribute, $value, $fail) {
+                    $maxSize = ($value->getMimeType() === 'application/pdf') ? 3072 : 2048;
+                    if ($value->getSize() > $maxSize * 1024) {
+                        $fail('Ukuran file terlalu besar. Maksimum ' . ($maxSize / 1024) . ' MB untuk ' . ($maxSize === 3072 ? 'PDF' : 'foto') . '.');
+                    }
+                },
+            ],
+        ], [
+            'file.mimes' => 'File yang dapat diupload hanya JPG, PNG, dan PDF.',
         ]);
 
-        // Update file jika ada file baru diupload
-        if ($request->hasFile('file')) {
-            // Hapus file lama jika ada
-            $oldFilePath = public_path($dokumen->file_dokumen);
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath); // Hapus file dari storage
+        if ($validator->fails()) {
+            return redirect()->route('dokumen_pendukung.index')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        try {
+            $dokumen = Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
+                ->where('id_kategori_dokumen', $id)
+                ->first();
+
+            if ($dokumen && $dokumen->file_dokumen) {
+                $oldFilePath = public_path($dokumen->file_dokumen);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
             }
 
-            // Simpan file baru
             $file = $request->file('file');
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('dokumen'), $fileName);
 
-            // Update path file di database
-            $dokumen->update([
-                'file_dokumen' => 'dokumen/' . $fileName,
-            ]);
-        }
+            Dokumen::updateOrCreate(
+                [
+                    'id_pegawai' => auth()->user()->id_pegawai,
+                    'id_kategori_dokumen' => $id,
+                ],
+                [
+                    'file_dokumen' => 'dokumen/' . $fileName,
+                ]
+            );
 
-        return redirect()->route('dokumen_pendukung.index')->with('success', 'Dokumen berhasil diperbarui!');
+            return redirect()->route('dokumen_pendukung.index')
+                ->with('success', 'File berhasil diupload!');
+        } catch (\Exception $e) {
+            return redirect()->route('dokumen_pendukung.index')
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 
     /**

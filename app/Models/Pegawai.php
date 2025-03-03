@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use illuminate\database\Eloquent\Relations\BelongsTo;
+use App\Models\Dokumen;
 
 use App\Models\StatusPegawais;
 
@@ -44,6 +45,11 @@ class Pegawai extends Model
 
     public function statuspegawai(): BelongsTo
     {
-        return $this->belongsTo(StatusPegawais::class,'status_pegawai_id','status_pegawai_id');
+        return $this->belongsTo(StatusPegawais::class, 'status_pegawai_id', 'status_pegawai_id');
+    }
+
+    public function dokumens()
+    {
+        return $this->hasMany(Dokumen::class, 'id_pegawai', 'pegawai_id');
     }
 }
