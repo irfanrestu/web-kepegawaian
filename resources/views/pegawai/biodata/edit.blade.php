@@ -139,28 +139,35 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
+                                        <div class="col-lg-3 col-md-4 label">Agama</div>
                                         <div class="col-lg-9 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
-                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
+                                        <div class="col-lg-3 col-md-4 label">No HP</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->no_hp }}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
-                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Email</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->email }}</div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
-                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
-                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Alamat</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->alamat_lengkap }}</div>
+                                        <div class="col-lg-3 col-md-4 label">RT</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->rt }}</div>
+                                        <div class="col-lg-3 col-md-4 label">RW</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->rw }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Kelurahan</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->kelurahan }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Kota/Kabupaten</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->kota_kabupaten }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Kode Pos</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->kode_pos }}</div>
+                                        <div class="col-lg-3 col-md-4 label">Homebase</div>
+                                        <div class="col-lg-9 col-md-8">{{ $pegawai_id->homebase }}</div>
                                     </div>
 
 

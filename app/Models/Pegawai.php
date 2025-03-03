@@ -47,7 +47,12 @@ class Pegawai extends Model
 
     public function statuspegawai(): BelongsTo
     {
-        return $this->belongsTo(StatusPegawais::class, 'status_pegawai_id', 'status_pegawai_id');
+        return $this->belongsTo(StatusPegawais::class, 'id_status_pegawai', 'status_pegawai_id');
+    }
+
+    public function agama(): BelongsTo
+    {
+        return $this->belongsTo(Agama::class, 'id_agama', 'agama_id');
     }
 
     public function dokumens()
