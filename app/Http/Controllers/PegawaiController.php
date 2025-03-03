@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
+use App\Models\StatusPegawais;
 use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
 {
     public function index(Request $request)
     {
+        
         if($request->has('cari')){
-            $pegawai = Pegawai::where('nama','LIKE','%'.$request->cari.'%')->get();
+            $pegawai = Pegawai::where('nama_lengkap','LIKE','%'.$request->cari.'%')->get();
         }else{
             $pegawai = Pegawai::all();
         }
@@ -61,10 +63,10 @@ class PegawaiController extends Controller
     }
 
 
-    public function edit(Pegawai $id)
+    public function edit(Pegawai $pegawai_id)
     {
 
-        return view('pegawai.biodata.edit', compact('id')); 
+        return view('pegawai.biodata.edit', compact('pegawai_id')); 
         
     }
 
@@ -96,7 +98,7 @@ class PegawaiController extends Controller
             'alamat.max' => 'Nama maksimal 45 karakter',
         ]);
 
-        DB::table('pegawai')->where('id',$id)->update([
+        DB::table('pegawai')->where('pegawai_id',$id)->update([
             'nama'=>$request->nama,
             'jenis_kelamin'=>$request->jenis_kelamin,
             'tempat_lahir'=>$request->tempat_lahir,

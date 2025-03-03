@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 <main id="main" class="main">
-<section class="section profile">
+  <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
 
@@ -278,6 +278,6 @@
 
         </div>
       </div>
-    </section>
-    </main>
+  </section>
+</main>
 @stop
