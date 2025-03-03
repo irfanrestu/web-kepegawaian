@@ -32,16 +32,7 @@ class DokumenController extends Controller
      */
     public function create()
     {
-        // Ambil ID kategori yang sudah pernah digunakan oleh pengguna yang sedang login
-        $usedKategoriIds = Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
-            ->pluck('id_kategori_dokumen')
-            ->unique()
-            ->toArray();
-
-        // Ambil hanya kategori yang belum digunakan oleh pengguna yang sedang login
-        $kategoriDokumens = KategoriDokumen::whereNotIn('kategori_dokumen_id', $usedKategoriIds)->get();
-
-        return view('dokumen_pendukung.create', compact('kategoriDokumens'));
+        //
 
     }
 
@@ -50,39 +41,7 @@ class DokumenController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input
-        $request->validate([
-            'id_kategori_dokumen' => [
-                'required',
-                'exists:kategori_dokumens,kategori_dokumen_id', // Perbaikan di sini
-                function ($attribute, $value, $fail) {
-                    if (
-                        Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
-                            ->where('id_kategori_dokumen', $value)
-                            ->exists()
-                    ) {
-                        $fail('Kategori yang sudah diupload, tidak dapat dibuat lagi.');
-                    }
-                },
-            ],
-            'files' => 'required',
-            'files.*' => 'file|mimes:png,jpg,pdf|max:2048',
-        ]);
-
-        if ($request->hasFile('files')) {
-            foreach ($request->file('files') as $file) {
-                $fileName = time() . '_' . $file->getClientOriginalName();
-                $file->move(public_path('dokumen'), $fileName);
-
-                Dokumen::create([
-                    'id_pegawai' => auth()->user()->id_pegawai,
-                    'id_kategori_dokumen' => $request->id_kategori_dokumen,
-                    'file_dokumen' => 'dokumen/' . $fileName,
-                ]);
-            }
-        }
-
-        return redirect()->route('dokumen_pendukung.index')->with('success', 'Dokumen berhasil diunggah!');
+        //
     }
 
     /**
