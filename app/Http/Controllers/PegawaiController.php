@@ -131,9 +131,11 @@ class PegawaiController extends Controller
 
     }
 
-    public function profile($id)
+    public function profile(Pegawai $pegawai_id)
     {
-        return view('pegawai.biodata.profile');
+
+
+        return view('pegawai.biodata.profile', compact('pegawai_id')); 
     }
 
     //Bagian Data_pegawai Tabs
