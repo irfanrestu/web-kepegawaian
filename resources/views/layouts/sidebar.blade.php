@@ -12,7 +12,7 @@
         <!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link"  href="{{ route('data_pegawai.index') }}">
+            <a class="nav-link" href="{{ route('data_pegawai.index') }}">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span>
             </a>
         </li>
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
+                    <a href="{{ route('dokumen_pendukung.index') }}">
                         <i class="bi bi-circle"></i><span>Dokumen Pendukung</span>
                     </a>
                 </li>

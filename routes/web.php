@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\Dokumen;
 use App\Models\RiwayatJabatan;
+use App\Models\RiwayatPendidikan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
@@ -8,6 +10,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RiwayatJabatanController;
+use App\Http\Controllers\RiwayatPendidikanController;
+use App\Http\Controllers\DokumenController;
 
 
 Route::get('/', function () {
@@ -30,7 +34,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/data_pegawai', [PegawaiController::class, 'index1'])->name('data_pegawai.index');
 
     // Rute Data Biodata pegawai
-    Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');    
+    Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');
     Route::get('/pegawai/biodata/create', [PegawaiController::class, 'create'])->name('biodata.create');
     Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
     Route::get('/pegawai/biodata/edit{pegawai_id}', [PegawaiController::class, 'edit'])->name('biodata.edit');
@@ -47,20 +51,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/riwayat_jabatan/delete{id}', [RiwayatJabatanController::class, 'destroy'])->name('riwayat_jabatan.destroy');
     //Akhir bagian halaman Riwayat Jabatan
 
-    Route::get('/riwayat_pendidikan', [RiwayatJabatanController::class, 'index'])->name('riwayat_pendidikan.index');
-    Route::get('/riwayat_pendidikan/create', [RiwayatJabatanController::class, 'create'])->name('riwayat_pendidikan.create');
-    Route::post('/riwayat_pendidikan/store', [RiwayatJabatanController::class, 'store'])->name('riwayat_pendidikan.store');
-    Route::get('/riwayat_pendidikan/edit{id}', [RiwayatJabatanController::class, 'edit'])->name('riwayat_pendidikan.edit');
-    Route::put('/riwayat_pendidikan/update{id}', [RiwayatJabatanController::class, 'update'])->name('riwayat_pendidikan.update');
-    Route::delete('/riwayat_pendidikan/delete{id}', [RiwayatJabatanController::class, 'destroy'])->name('riwayat_pendidikan.destroy');
+    Route::get('/riwayat_pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat_pendidikan.index');
+    Route::get('/riwayat_pendidikan/create', [RiwayatPendidikanController::class, 'create'])->name('riwayat_pendidikan.create');
+    Route::post('/riwayat_pendidikan/store', [RiwayatPendidikanController::class, 'store'])->name('riwayat_pendidikan.store');
+    Route::get('/riwayat_pendidikan/edit{id}', [RiwayatPendidikanController::class, 'edit'])->name('riwayat_pendidikan.edit');
+    Route::put('/riwayat_pendidikan/update{id}', [RiwayatPendidikanController::class, 'update'])->name('riwayat_pendidikan.update');
+    Route::delete('/riwayat_pendidikan/delete{id}', [RiwayatPendidikanController::class, 'destroy'])->name('riwayat_pendidikan.destroy');
     //Akhir bagian halaman Riwayat Pendidikan
 
-    Route::get('/dokumen_pendukung', [RiwayatJabatanController::class, 'index'])->name('dokumen_pendukung.index');
-    Route::get('/dokumen_pendukung/create', [RiwayatJabatanController::class, 'create'])->name('dokumen_pendukung.create');
-    Route::post('/dokumen_pendukung/store', [RiwayatJabatanController::class, 'store'])->name('dokumen_pendukung.store');
-    Route::get('/dokumen_pendukung/edit{id}', [RiwayatJabatanController::class, 'edit'])->name('dokumen_pendukung.edit');
-    Route::put('/dokumen_pendukung/update{id}', [RiwayatJabatanController::class, 'update'])->name('dokumen_pendukung.update');
-    Route::delete('/dokumen_pendukung/delete{id}', [RiwayatJabatanController::class, 'destroy'])->name('dokumen_pendukung.destroy');
+    Route::get('/dokumen_pendukung', [DokumenController::class, 'index'])->name('dokumen_pendukung.index');
+    Route::get('/dokumen_pendukung/create', [DokumenController::class, 'create'])->name('dokumen_pendukung.create');
+    Route::post('/dokumen_pendukung/store', [DokumenController::class, 'store'])->name('dokumen_pendukung.store');
+    Route::get('/dokumen_pendukung/edit{id}', [DokumenController::class, 'edit'])->name('dokumen_pendukung.edit');
+    Route::put('/dokumen_pendukung/update{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
+    Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
     //Akhir bagian halaman Dokumen Pendukung
 
     //Rute Post Artikel
