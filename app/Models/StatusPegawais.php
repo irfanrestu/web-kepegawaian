@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use illuminate\database\Eloquent\Relations\HasMany;
-use Pegawai;
+use App\Models\Pegawai;
 
 class StatusPegawais extends Model
 {

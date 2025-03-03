@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\StatusPegawais;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
 {
@@ -23,6 +24,7 @@ class PegawaiController extends Controller
 
 
         return view('pegawai.biodata.index', compact('pegawai'));
+        }
     }
 
     public function create()
@@ -71,7 +73,6 @@ class PegawaiController extends Controller
     public function edit(Pegawai $pegawai_id)
     {
 
-        return view('pegawai.biodata.edit', compact('id'));
 
         return view('pegawai.biodata.edit', compact('pegawai_id')); 
         
@@ -107,14 +108,7 @@ class PegawaiController extends Controller
             ]
         );
 
-        DB::table('pegawai')->where('id', $id)->update([
-            'nama' => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'email' => $request->email,
-            'no_tlp' => $request->no_tlp,
-            'alamat' => $request->alamat,
+        
         DB::table('pegawai')->where('pegawai_id',$id)->update([
             'nama'=>$request->nama,
             'jenis_kelamin'=>$request->jenis_kelamin,
@@ -159,6 +153,5 @@ class PegawaiController extends Controller
     {
         //
     }
-
 
 }
