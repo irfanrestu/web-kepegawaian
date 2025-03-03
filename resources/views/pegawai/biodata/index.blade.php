@@ -40,13 +40,21 @@
                                     <tbody>
                                         @foreach ($pegawai as $p)
                                             <tr>
-                                                <th scope="row"> {{ $p->file_foto }} </th>
+                                                <th scope="row">                    
+                                                @empty($p->file_foto)
+                                                <img src="{{url('image/nophoto.jpg')}}"
+                                                    alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
+                                                @else
+                                                <img src="{{url('image')}}/{{$p->file_foto}}"
+                                                    alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
+                                                @endempty
+                                                </th>
                                                 <td><a href="/pegawai/{{$p->pegawai_id}}/profile">{{ $p->nama_lengkap }}</a>
                                                 </td>
                                                 <td> {{ $p->nip }} </td>
                                                 <td> {{ $p->no_nik }} </td>
                                                 <td> {{ $p->statuspegawai->status_pegawai }} </td>
-                                                <td> {{ $p->alamat }} </td>
+                                                <td> {{ $p->alamat_lengkap }} </td>
                                                 <td> {{ $p->email }} </td>
                                                 <td> {{ $p->no_hp }} </td>
                                                 <td>

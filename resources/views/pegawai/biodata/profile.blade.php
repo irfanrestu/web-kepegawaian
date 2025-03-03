@@ -19,11 +19,16 @@
         <section class="section profile">
             <div class="row">
                 <div class="col-xl-4">
-
+                  
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-                            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                            @empty($pegawai->file_foto)
+                                <img src="{{url('image/nophoto.jpg')}}"
+                                alt="project-image" class="rounded-circle" style="width: 100%; max-width: 100px; height: auto;">
+                            @else
+                                <img src="{{url('image')}}/{{$p->file_foto}}"
+                                 alt="project-image" class="rounded-circle" style="width: 100%; max-width: 100px; height: auto;">
+                            @endempty
                             <h2>{{ $pegawai_id->nama_lengkap }}</h2>
                             <h3>Web Designer</h3>
                             <div class="social-links mt-2">
@@ -297,7 +302,8 @@
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary">Save Changes</button>
                                         </div>
-                                    </form><!-- End Profile Edit Form -->
+                                    </form>
+                                    <!-- End Profile Edit Form -->
 
                                 </div>
 

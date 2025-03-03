@@ -11,10 +11,12 @@ use App\Models\StatusPegawais;
 
 class Pegawai extends Model
 {
-    protected $primaryKey = 'pegawai_id';
+
     use HasFactory;
+    protected $table = 'pegawais';
+    protected $primaryKey = 'pegawai_id';
+    
     protected $fillable = [
-        'pegawai_id',
         'nama_lengkap',
         'gelar_depan',
         'gelar_belakang',

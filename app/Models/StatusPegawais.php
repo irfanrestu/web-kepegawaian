@@ -5,10 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use illuminate\database\Eloquent\Relations\HasMany;
 use App\Models\Pegawai;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class StatusPegawais extends Model
 {
-   
+    use HasFactory;
+
+    
+    protected $primaryKey = 'status_pegawai_id'; // Specify the primary key if different
+
     protected $fillable = [
         'status_pegawai_id',
         'status_pegawai'
