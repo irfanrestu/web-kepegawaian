@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             KategoriDokumensSeeder::class,
             JenjangPendidikansSeeder::class,
             JurusansSeeder::class,
+            RolesSeeder::class,
+            JenisJabatansSeeder::class,
+            UnitsSeeder::class,
         ]);
     }
 }
