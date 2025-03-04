@@ -8,6 +8,7 @@ use illuminate\database\Eloquent\Relations\BelongsTo;
 use App\Models\Dokumen;
 
 use App\Models\StatusPegawais;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Pegawai extends Model
 {
@@ -60,5 +61,10 @@ class Pegawai extends Model
     public function dokumens()
     {
         return $this->hasMany(Dokumen::class, 'id_pegawai', 'pegawai_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id_pegawai', 'pegawai_id');
     }
 }
