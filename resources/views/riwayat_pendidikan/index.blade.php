@@ -5,7 +5,7 @@
 @section('content')
     <main id="main" class="main">
         <div class="pagetitle">
-            <h1>Data Tables</h1>
+            <h1>Riwayat Pendidikan</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
@@ -20,7 +20,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="container-fluid px-4">
-                            <h5 class="card-title mt-4">Riwayat Pendidikan</h5>
+                            <h5 class="card-title mt-4">Detail Riwayat Pendidikan</h5>
                             <div class="row">
                                 <div class="card">
                                     @if (session('success'))
