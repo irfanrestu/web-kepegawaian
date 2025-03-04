@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Models\Pegawai;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class PegawaiObserver
 {
@@ -24,6 +25,7 @@ class PegawaiObserver
                 $user->password = bcrypt('rahasia');
                 $user->id_role = $role->role_id;
                 $user->id_pegawai = $pegawai->pegawai_id;
+                $user->remember_token = Str::random(60);
                 $user->save();
             }else {
                 
