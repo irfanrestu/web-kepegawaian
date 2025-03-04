@@ -36,11 +36,12 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
+        // Validate the form data
         $request->validate([
+            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the photo
             'nama_lengkap' => 'required|string|max:255',
             'gelar_depan' => 'nullable|string|max:255',
             'gelar_belakang' => 'nullable|string|max:255',
-            'file_foto' => 'nullable|string|max:255',
             'nip' => 'required|string|max:255',
             'npwp' => 'nullable|string|max:255',
             'no_karpeg' => 'nullable|string|max:255',
@@ -53,7 +54,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|string|max:255',
             'id_agama' => 'required|integer',
             'no_hp' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|email|max:255',
             'alamat_lengkap' => 'required|string',
             'rt' => 'required|string|max:255',
             'rw' => 'required|string|max:255',
@@ -64,8 +65,44 @@ class PegawaiController extends Controller
             'homebase' => 'required|string|max:255',
         ]);
 
+        // Handle file upload
+        if ($request->hasFile('file_foto')) {
+            $file = $request->file('file_foto');
+            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate a unique file name
+            $filePath = $file->storeAs('uploads', $fileName, 'public'); // Save the file in the "public/uploads" directory
+        } else {
+            $filePath = null; // No file uploaded
+        }
+
         // Create a new Pegawai record
-        Pegawai::create($request->all());
+        Pegawai::create([
+            'file_foto' => $filePath, // Save the file path to the database
+            'nama_lengkap' => $request->nama_lengkap,
+            'gelar_depan' => $request->gelar_depan,
+            'gelar_belakang' => $request->gelar_belakang,
+            'nip' => $request->nip,
+            'npwp' => $request->npwp,
+            'no_karpeg' => $request->no_karpeg,
+            'no_bpjs' => $request->no_bpjs,
+            'no_kartu_keluarga' => $request->no_kartu_keluarga,
+            'no_nik' => $request->no_nik,
+            'id_status_pegawai' => $request->id_status_pegawai,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'id_agama' => $request->id_agama,
+            'no_hp' => $request->no_hp,
+            'email' => $request->email,
+            'alamat_lengkap' => $request->alamat_lengkap,
+            'rt' => $request->rt,
+            'rw' => $request->rw,
+            'kelurahan' => $request->kelurahan,
+            'kecamatan' => $request->kecamatan,
+            'kota_kabupaten' => $request->kota_kabupaten,
+            'kode_pos' => $request->kode_pos,
+            'homebase' => $request->homebase,
+        ]);
+
 
         return redirect('/pegawai/biodata')->with('status', 'Pegawai berhasil dibuat');
     }

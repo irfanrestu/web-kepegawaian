@@ -21,7 +21,7 @@
                             </div>
                             <div class="card-body">
 
-                                    <!-- Profile Edit Form 
+                                    
                                     <form action="{{ Route('biodata.store') }}" method="POST" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row mb-3">
@@ -107,8 +107,6 @@
                                         <div class="row mb-3">
                                             <label for="id_status_pegawai" class="col-md-4 col-lg-3 col-form-label">Status Pegawai</label>
                                             <div class="col-md-8 col-lg-9">
-                                            <input name="id_status_pegawai" type="text" class="form-control" id="id_status_pegawai"
-                                            value="{{ old('id_status_pegawai') }}">
                                             <select name="id_status_pegawai" id="id_status_pegawai">
                                                     <option value="1">CPNS</option>
                                                     <option value="2">PNS</option>
@@ -128,7 +126,7 @@
                                         <div class="row mb-3">
                                             <label for="tanggal_lahir" class="col-md-4 col-lg-3 col-form-label">Tanggal Lahir</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="tanggal_lahir" type="text" class="form-control" id="tanggal_lahir"
+                                                <input name="tanggal_lahir" type="date" class="form-control" id="tanggal_lahir"
                                                     value="{{ old('tanggal_lahir') }}">
                                             </div>
                                         </div>
@@ -136,8 +134,10 @@
                                         <div class="row mb-3">
                                             <label for="jenis_kelamin" class="col-md-4 col-lg-3 col-form-label">Jenis Kelamin</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="jenis_kelamin" type="text" class="form-control" id="jenis_kelamin"
-                                                    value="{{ old('jenis_kelamin') }}">
+                                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                </select>
                                             </div>
                                         </div>
 
@@ -239,92 +239,8 @@
                                         <div class="text-center">
                                             <button type="submit" class="btn btn-primary">Simpan</button>
                                         </div>
-                                    </form>  -->
-                                    <!-- End Profile Edit Form -->
-
-
-                                    
-                                    <form action="{{ Route('biodata.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-        <label for="nama_lengkap">Nama Lengkap:</label>
-        <input type="text" name="nama_lengkap" id="nama_lengkap" required><br>
-
-        <label for="gelar_depan">Gelar Depan:</label>
-        <input type="text" name="gelar_depan" id="gelar_depan"><br>
-
-        <label for="gelar_belakang">Gelar Belakang:</label>
-        <input type="text" name="gelar_belakang" id="gelar_belakang"><br>
-
-        <label for="file_foto">File Foto:</label>
-        <input type="text" name="file_foto" id="file_foto"><br>
-
-        <label for="nip">NIP:</label>
-        <input type="text" name="nip" id="nip" required><br>
-
-        <label for="npwp">NPWP:</label>
-        <input type="text" name="npwp" id="npwp"><br>
-
-        <label for="no_karpeg">No. Karpeg:</label>
-        <input type="text" name="no_karpeg" id="no_karpeg"><br>
-
-        <label for="no_bpjs">No. BPJS:</label>
-        <input type="text" name="no_bpjs" id="no_bpjs"><br>
-
-        <label for="no_kartu_keluarga">No. Kartu Keluarga:</label>
-        <input type="text" name="no_kartu_keluarga" id="no_kartu_keluarga"><br>
-
-        <label for="no_nik">No. NIK:</label>
-        <input type="text" name="no_nik" id="no_nik" required><br>
-
-        <label for="id_status_pegawai">Status Pegawai:</label>
-        <input type="number" name="id_status_pegawai" id="id_status_pegawai" required><br>
-
-        <label for="tempat_lahir">Tempat Lahir:</label>
-        <input type="text" name="tempat_lahir" id="tempat_lahir" required><br>
-
-        <label for="tanggal_lahir">Tanggal Lahir:</label>
-        <input type="date" name="tanggal_lahir" id="tanggal_lahir" required><br>
-
-        <label for="jenis_kelamin">Jenis Kelamin:</label>
-        <input type="text" name="jenis_kelamin" id="jenis_kelamin" required><br>
-
-        <label for="id_agama">Agama:</label>
-        <input type="number" name="id_agama" id="id_agama" required><br>
-
-        <label for="no_hp">No. HP:</label>
-        <input type="text" name="no_hp" id="no_hp" required><br>
-
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required><br>
-
-        <label for="alamat_lengkap">Alamat Lengkap:</label>
-        <textarea name="alamat_lengkap" id="alamat_lengkap" required></textarea><br>
-
-        <label for="rt">RT:</label>
-        <input type="text" name="rt" id="rt" required><br>
-
-        <label for="rw">RW:</label>
-        <input type="text" name="rw" id="rw" required><br>
-
-        <label for="kelurahan">Kelurahan:</label>
-        <input type="text" name="kelurahan" id="kelurahan" required><br>
-
-        <label for="kecamatan">Kecamatan:</label>
-        <input type="text" name="kecamatan" id="kecamatan" required><br>
-
-        <label for="kota_kabupaten">Kota/Kabupaten:</label>
-        <input type="text" name="kota_kabupaten" id="kota_kabupaten" required><br>
-
-        <label for="kode_pos">Kode Pos:</label>
-        <input type="text" name="kode_pos" id="kode_pos" required><br>
-
-        <label for="homebase">Homebase:</label>
-        <input type="text" name="homebase" id="homebase" required><br>
-
-        <button type="submit">Simpan</button>
-    </form>
-
+                                    </form>  
+                                    <!-- End Create Profile Form -->
 
 
                             </div>

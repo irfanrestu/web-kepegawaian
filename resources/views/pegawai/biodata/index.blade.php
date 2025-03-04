@@ -45,8 +45,7 @@
                                                 <img src="{{url('image/nophoto.jpg')}}"
                                                     alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
                                                 @else
-                                                <img src="{{url('image')}}/{{$p->file_foto}}"
-                                                    alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
+                                                <img src="{{ asset('storage/' . $p->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
                                                 @endempty
                                                 </th>
                                                 <td><a href="/pegawai/{{$p->pegawai_id}}/profile">{{ $p->nama_lengkap }}</a>
