@@ -11,9 +11,9 @@ class StatusPegawais extends Model
 {
     use HasFactory;
 
+    protected $table = 'status_pegawais'; 
     
-    protected $primaryKey = 'status_pegawai_id'; // Specify the primary key if different
-
+    protected $primaryKey = 'status_pegawai_id';
     protected $fillable = [
         'status_pegawai_id',
         'status_pegawai'

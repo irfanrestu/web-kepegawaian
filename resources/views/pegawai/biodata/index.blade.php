@@ -48,8 +48,7 @@
                                                 <img src="{{ asset('storage/' . $p->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
                                                 @endempty
                                                 </th>
-                                                <td><a href="/pegawai/{{$p->pegawai_id}}/profile">{{ $p->nama_lengkap }}</a>
-                                                </td>
+                                                <td>{{ $p->nama_lengkap }}</td>
                                                 <td> {{ $p->nip }} </td>
                                                 <td> {{ $p->no_nik }} </td>
                                                 <td> {{ $p->statuspegawai->status_pegawai }} </td>
@@ -59,7 +58,7 @@
                                                 <td>
                                                     <a href="{{ route('biodata.profile', $p->pegawai_id) }}"
                                                         class="btn btn-sm btn-info">Profile</a>
-                                                    <a href="{{ route('biodata.edit', $p->pegawai_id) }}"
+                                                    <a href="{{ route('biodata.edit', $p->pegawai_id, ) }}"
                                                         class="btn btn-sm btn-success">edit</a>
                                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{$p->pegawai_id}}">
@@ -78,7 +77,7 @@
                                                                         data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    Apakah anda yakin akan menghapus data {{$p->nama}}
+                                                                    Apakah anda yakin akan menghapus data {{$p->nama_lengkap}}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"

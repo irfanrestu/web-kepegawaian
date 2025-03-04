@@ -37,8 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');
     Route::get('/pegawai/biodata/create', [PegawaiController::class, 'create'])->name('biodata.create');
     Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
-    Route::get('/pegawai/biodata/edit{pegawai_id}', [PegawaiController::class, 'edit'])->name('biodata.edit');
-    Route::put('/pegawai/biodata/update{pegawai_id}', [PegawaiController::class, 'update'])->name('biodata.update');
+    Route::get('/pegawai/biodata/edit/{pegawai}', [PegawaiController::class, 'edit'])->name('biodata.edit');
+    Route::put('/pegawai/biodata/{pegawai}', [PegawaiController::class, 'update'])->name('biodata.update');
     Route::get('/pegawai/biodata/profile{pegawai_id}', [PegawaiController::class, 'profile'])->name('biodata.profile');
     Route::delete('/pegawai/biodata/delete{pegawai_id}', [PegawaiController::class, 'destroy'])->name('biodata.destroy');
     //Akhir bagian halaman Biodata Pegawai

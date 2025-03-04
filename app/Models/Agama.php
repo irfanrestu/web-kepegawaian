@@ -7,9 +7,12 @@ use illuminate\database\Eloquent\Relations\HasMany;
 
 class Agama extends Model
 {
+    protected $table = 'agamas'; // Explicitly define the table name
+    
+    protected $primaryKey = 'agama_id';
     protected $fillable = [
-        'status_pegawai_id',
-        'status_pegawai'
+        'agama_id',
+        'nama_agama'
     ];
 
     public function pegawais(): HasMany

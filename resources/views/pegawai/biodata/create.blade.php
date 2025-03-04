@@ -107,11 +107,13 @@
                                         <div class="row mb-3">
                                             <label for="id_status_pegawai" class="col-md-4 col-lg-3 col-form-label">Status Pegawai</label>
                                             <div class="col-md-8 col-lg-9">
-                                            <select name="id_status_pegawai" id="id_status_pegawai">
-                                                    <option value="1">CPNS</option>
-                                                    <option value="2">PNS</option>
-                                                    <option value="3">PPPK</option>
-                                            </select>
+                                                <select name="id_status_pegawai" id="id_status_pegawai" class="form-control">
+                                                    @foreach($liststatuspegawai as $status)
+                                                        <option value="{{ $status->status_pegawai_id }}">
+                                                            {{ $status->status_pegawai }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
@@ -144,15 +146,13 @@
                                         <div class="row mb-3">
                                             <label for="id_agama" class="col-md-4 col-lg-3 col-form-label">Agama</label>
                                             <div class="col-md-8 col-lg-9">
-                                                
-                                            <select name="id_agama" id="id_agama">
-                                                    <option value="1">Islam</option>
-                                                    <option value="2">Kristen</option>
-                                                    <option value="3">Katholik</option>
-                                                    <option value="4">Hindu</option>
-                                                    <option value="5">Buddha</option>
-                                                    <option value="6">Khonghuchu</option>
-                                            </select>
+                                                <select name="id_agama" id="id_agama" class="form-control">
+                                                    @foreach($listagama as $agama)
+                                                        <option value="{{ $agama->agama_id }}">
+                                                            {{ $agama->nama_agama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                         

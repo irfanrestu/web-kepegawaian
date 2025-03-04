@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
 use App\Models\StatusPegawais;
+use App\Models\Agama;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -30,7 +32,12 @@ class PegawaiController extends Controller
     public function create()
     {
 
-        return view('pegawai.biodata.create');
+        //mengambil data dari database
+        $listagama = Agama::all();
+        $liststatuspegawai = StatusPegawais::all();
+
+
+        return view('pegawai.biodata.create', compact('listagama', 'liststatuspegawai'));
 
     }
 
@@ -108,61 +115,101 @@ class PegawaiController extends Controller
     }
 
 
-    public function edit(Pegawai $pegawai_id)
+    public function edit(Pegawai $pegawai)
     {
+        $liststatuspegawai = StatusPegawais::all();
+        $listagama = Agama::all();
 
-
-        return view('pegawai.biodata.edit', compact('pegawai_id')); 
+        return view('pegawai.biodata.edit', compact('pegawai', 'liststatuspegawai', 'listagama')); 
         
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request,Pegawai $pegawai)
     {
-        $request->validate(
-            [
-                'nama' => 'required|string|max:225',
-                'jenis_kelamin' => 'required|string|max:225',
-                'tempat_lahir' => 'required|string|max:225',
-                'tanggal_lahir' => 'required|string|max:225',
-                'email' => 'required|string|max:225',
-                'no_tlp' => 'required|string|max:225',
-                'alamat' => 'required|string|max:225',
-            ],
-            [
-                'nama.required' => 'Nama Wajib diisi',
-                'nama.max' => 'Nama maksimal 45 karakter',
-                'jenis_kelamin.required' => 'Nama Wajib diisi',
-                'jenis_kelamin.max' => 'Nama maksimal 45 karakter',
-                'tempat_lahir.required' => 'Nama Wajib diisi',
-                'tempat_lahir.max' => 'Nama maksimal 45 karakter',
-                'tanggal_lahir.required' => 'Nama Wajib diisi',
-                'tanggal_lahir.max' => 'Nama maksimal 45 karakter',
-                'email.required' => 'Nama Wajib diisi',
-                'email.max' => 'Nama maksimal 45 karakter',
-                'no_tlp.required' => 'Nama Wajib diisi',
-                'no.tlp.max' => 'Nama maksimal 45 karakter',
-                'alamat.required' => 'Nama Wajib diisi',
-                'alamat.max' => 'Nama maksimal 45 karakter',
-            ]
-        );
-
-        
-        DB::table('pegawai')->where('pegawai_id',$id)->update([
-            'nama'=>$request->nama,
-            'jenis_kelamin'=>$request->jenis_kelamin,
-            'tempat_lahir'=>$request->tempat_lahir,
-            'tanggal_lahir'=>$request->tanggal_lahir,
-            'email'=>$request->email,
-            'no_tlp'=>$request->no_tlp,
-            'alamat'=>$request->alamat,
+        // Validate the request data
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'gelar_depan' => 'nullable|string|max:50',
+            'gelar_belakang' => 'nullable|string|max:50',
+            'nip' => 'nullable|string|max:50',
+            'npwp' => 'nullable|string|max:50',
+            'no_karpeg' => 'nullable|string|max:50',
+            'no_bpjs' => 'nullable|string|max:50',
+            'no_kartu_keluarga' => 'nullable|string|max:50',
+            'no_nik' => 'nullable|string|max:50',
+            'id_status_pegawai' => 'required|exists:status_pegawais,status_pegawai_id',
+            'tempat_lahir' => 'nullable|string|max:100',
+            'tanggal_lahir' => 'nullable|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'id_agama' => 'required|exists:agamas,agama_id',
+            'no_hp' => 'nullable|string|max:20',
+            'email' => 'nullable|email|max:255',
+            'alamat_lengkap' => 'nullable|string',
+            'rt' => 'nullable|string|max:10',
+            'rw' => 'nullable|string|max:10',
+            'kelurahan' => 'nullable|string|max:100',
+            'kecamatan' => 'nullable|string|max:100',
+            'kota_kabupaten' => 'nullable|string|max:100',
+            'kode_pos' => 'nullable|string|max:10',
+            'homebase' => 'nullable|string|max:100',
+            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'remove_photo' => 'nullable|boolean',
         ]);
 
-        return redirect()->route('biodata.index');
+
+        // Handle profile photo update
+        if ($request->hasFile('file_foto')) {
+            // Delete the old photo if it exists
+            if ($pegawai->file_foto && Storage::exists($pegawai->file_foto)) {
+                Storage::delete($pegawai->file_foto);
+            }
+
+            // Store the new photo
+            $path = $request->file('file_foto')->store('profile_photos', 'public');
+            $pegawai->file_foto = $path;
+        } elseif ($request->input('remove_photo') == '1') {
+            // Remove the photo if the remove_photo flag is set
+            if ($pegawai->file_foto && Storage::exists($pegawai->file_foto)) {
+                Storage::delete($pegawai->file_foto);
+            }
+            $pegawai->file_foto = null;
+        }
+
+        // Update the employee's data
+        $pegawai->update([
+            'nama_lengkap' => $request->input('nama_lengkap'),
+            'gelar_depan' => $request->input('gelar_depan'),
+            'gelar_belakang' => $request->input('gelar_belakang'),
+            'nip' => $request->input('nip'),
+            'npwp' => $request->input('npwp'),
+            'no_karpeg' => $request->input('no_karpeg'),
+            'no_bpjs' => $request->input('no_bpjs'),
+            'no_kartu_keluarga' => $request->input('no_kartu_keluarga'),
+            'no_nik' => $request->input('no_nik'),
+            'id_status_pegawai' => $request->input('id_status_pegawai'),
+            'tempat_lahir' => $request->input('tempat_lahir'),
+            'tanggal_lahir' => $request->input('tanggal_lahir'),
+            'jenis_kelamin' => $request->input('jenis_kelamin'),
+            'id_agama' => $request->input('id_agama'),
+            'no_hp' => $request->input('no_hp'),
+            'email' => $request->input('email'),
+            'alamat_lengkap' => $request->input('alamat_lengkap'),
+            'rt' => $request->input('rt'),
+            'rw' => $request->input('rw'),
+            'kelurahan' => $request->input('kelurahan'),
+            'kecamatan' => $request->input('kecamatan'),
+            'kota_kabupaten' => $request->input('kota_kabupaten'),
+            'kode_pos' => $request->input('kode_pos'),
+            'homebase' => $request->input('homebase'),
+        ]);
+
+        // Redirect back with a success message
+        return redirect()->route('biodata.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
-    public function destroy(Pegawai $id)
+    public function destroy(Pegawai $pegawai_id)
     {
-        $id->delete();
+        $pegawai_id->delete();
 
         return redirect()->route('biodata.index')
             ->with('success', 'Data berhasil di hapus');
