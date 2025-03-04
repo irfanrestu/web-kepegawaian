@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use illuminate\database\Eloquent\Relations\BelongsTo;
-use App\Models\Dokumen;
 
 use App\Models\StatusPegawais;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Models\Dokumen;
+use App\Models\RiwayatPendidikan;
+use App\Models\RiwayatJabatan;
 
 class Pegawai extends Model
 {
@@ -16,7 +18,7 @@ class Pegawai extends Model
     use HasFactory;
     protected $table = 'pegawais';
     protected $primaryKey = 'pegawai_id';
-    
+
     protected $fillable = [
         'nama_lengkap',
         'gelar_depan',
@@ -66,5 +68,10 @@ class Pegawai extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id_pegawai', 'pegawai_id');
+    }
+
+    public function riwayatPendidikan()
+    {
+        return $this->hasMany(RiwayatPendidikan::class, 'id_pegawai', 'pegawai_id');
     }
 }

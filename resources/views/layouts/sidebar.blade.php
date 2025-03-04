@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
+                    <a href="{{ route('riwayat_pendidikan.index') }}">
                         <i class="bi bi-circle"></i><span>Riwayat Pendidikan</span>
                     </a>
                 </li>
