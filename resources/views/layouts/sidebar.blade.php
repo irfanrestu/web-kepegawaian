@@ -56,13 +56,13 @@
             </a>
         </li>
         <!-- End Profil Nav -->
-
+        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
         <li class="nav-item">
             <a class="nav-link" href="{{ route('post.index') }}">
                 <i class="bi bi-journal-text"></i><span>Post Artikel</span>
             </a>
-    </ul>
-    </li>
+        </li>
+        @endif
     <!-- End Post Artikel Nav -->
 
     </ul>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Authen;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,8 +13,21 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'admin' => \App\Http\Middleware\Admin::class,
+            'auth.role' => Authen::class, //mengubah alias ke "auth.role"
         ]);
+
+        // grouping route admin only
+        $middleware->group('admin', [
+            'auth', // 
+            'auth.role:Admin', // Your custom role-based middleware
+        ]);
+
+        //grouping route untuk admin dan pegawai konten
+        $middleware->group('konten', [
+            'auth', // Laravel's built-in authentication middleware
+            'auth.role:Admin,Pegawai Konten', // Your custom role-based middleware
+        ]);
+
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -44,9 +44,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/pegawai/change-password', [PegawaiController::class, 'changePassword'])->name('pegawai.change-password');
     
     // Fitur exclusive untuk admin
-    Route::middleware(['auth', 'admin'])->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::put('/pegawai/{pegawai}/change-role', [PegawaiController::class, 'changeRole'])->name('pegawai.change-role');
     });
+
+    //fitur exclusive admin dan pegawai konten
+    Route::middleware('content')->group(function () {
+    //Rute Post Artikel
+    Route::get('/post', [PostController::class, 'index'])->name('post.index');
+    });
+
     //Akhir bagian halaman Biodata Pegawai
 
     Route::get('/riwayat_jabatan', [RiwayatJabatanController::class, 'index'])->name('riwayat_jabatan.index');
@@ -70,6 +77,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
     //Akhir bagian halaman Dokumen Pendukung
 
-    //Rute Post Artikel
-    Route::get('/post', [PostController::class, 'index'])->name('post.index');
+    
 });
