@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Models\StatusPegawais;
 use App\Models\Agama;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 
 class PegawaiController extends Controller
@@ -20,35 +20,26 @@ class PegawaiController extends Controller
         if ($request->has('cari')) {
             $pegawai = Pegawai::where('nama', 'LIKE', '%' . $request->cari . '%')->get();
         } else {
-        
-        if($request->has('cari')){
-            $pegawai = Pegawai::where('nama_lengkap','LIKE','%'.$request->cari.'%')->get();
-        }else{
             $pegawai = Pegawai::all();
         }
 
-
         return view('pegawai.biodata.index', compact('pegawai'));
-        }
     }
 
     public function create()
     {
-
-        //mengambil data dari database
+        // Fetch data from the database
         $listagama = Agama::all();
         $liststatuspegawai = StatusPegawais::all();
 
-
         return view('pegawai.biodata.create', compact('listagama', 'liststatuspegawai'));
-
     }
 
     public function store(Request $request)
     {
         // Validate the form data
         $request->validate([
-            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the photo
+            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_lengkap' => 'required|string|max:255',
             'gelar_depan' => 'nullable|string|max:255',
             'gelar_belakang' => 'nullable|string|max:255',
@@ -78,15 +69,15 @@ class PegawaiController extends Controller
         // Handle file upload
         if ($request->hasFile('file_foto')) {
             $file = $request->file('file_foto');
-            $fileName = time() . '_' . $file->getClientOriginalName(); // Generate a unique file name
-            $filePath = $file->storeAs('uploads', $fileName, 'public'); // Save the file in the "public/uploads" directory
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
         } else {
-            $filePath = null; // No file uploaded
+            $filePath = null;
         }
 
         // Create a new Pegawai record
         Pegawai::create([
-            'file_foto' => $filePath, // Save the file path to the database
+            'file_foto' => $filePath,
             'nama_lengkap' => $request->nama_lengkap,
             'gelar_depan' => $request->gelar_depan,
             'gelar_belakang' => $request->gelar_belakang,
@@ -113,21 +104,18 @@ class PegawaiController extends Controller
             'homebase' => $request->homebase,
         ]);
 
-
         return redirect('/pegawai/biodata')->with('status', 'Pegawai berhasil dibuat');
     }
-
 
     public function edit(Pegawai $pegawai)
     {
         $liststatuspegawai = StatusPegawais::all();
         $listagama = Agama::all();
 
-        return view('pegawai.biodata.edit', compact('pegawai', 'liststatuspegawai', 'listagama')); 
-        
+        return view('pegawai.biodata.edit', compact('pegawai', 'liststatuspegawai', 'listagama'));
     }
 
-    public function update(Request $request,Pegawai $pegawai)
+    public function update(Request $request, Pegawai $pegawai)
     {
         // Validate the request data
         $request->validate([
@@ -159,19 +147,14 @@ class PegawaiController extends Controller
             'remove_photo' => 'nullable|boolean',
         ]);
 
-
         // Handle profile photo update
         if ($request->hasFile('file_foto')) {
-            // Delete the old photo if it exists
             if ($pegawai->file_foto && Storage::exists($pegawai->file_foto)) {
                 Storage::delete($pegawai->file_foto);
             }
-
-            // Store the new photo
             $path = $request->file('file_foto')->store('profile_photos', 'public');
             $pegawai->file_foto = $path;
         } elseif ($request->input('remove_photo') == '1') {
-            // Remove the photo if the remove_photo flag is set
             if ($pegawai->file_foto && Storage::exists($pegawai->file_foto)) {
                 Storage::delete($pegawai->file_foto);
             }
@@ -206,24 +189,20 @@ class PegawaiController extends Controller
             'homebase' => $request->input('homebase'),
         ]);
 
-        // Redirect back with a success message
         return redirect()->route('biodata.index')->with('success', 'Data pegawai berhasil diperbarui.');
     }
 
     public function destroy(Pegawai $pegawai_id)
     {
         $pegawai_id->delete();
-
-        return redirect()->route('biodata.index')
-            ->with('success', 'Data berhasil di hapus');
-
+        return redirect()->route('biodata.index')->with('success', 'Data berhasil di hapus');
     }
 
-    public function profile(Pegawai $pegawai_id)
+    public function profile(Pegawai $pegawai)
     {
-
-
-        return view('pegawai.biodata.profile', compact('pegawai_id')); 
+        $rolelist = Role::all();
+        $userlist = User::all();
+        return view('pegawai.biodata.profile', compact('pegawai', 'rolelist','userlist'));
     }
 
     public function changePassword(Request $request)
@@ -247,11 +226,27 @@ class PegawaiController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        // Redirect back with a success message
         return back()->with('success', 'Password changed successfully.');
     }
 
-    //Bagian Data_pegawai Tabs
+    public function changeRole(Request $request, $pegawai)
+    {
+        // Validate the request
+        $request->validate([
+            'role_id' => 'required|exists:roles,role_id',
+        ]);
+
+        // Find the pegawai
+        $user = User::where('id_pegawai', $pegawai)->firstorFail();
+
+        // Update the role
+        $user->update([
+            'id_role' => $request->role_id,
+        ]);
+
+        return back()->with('success', 'Role updated successfully.');
+    }
+
     public function index1(Request $request)
     {
         if ($request->has('cari')) {
@@ -260,7 +255,6 @@ class PegawaiController extends Controller
             $pegawai = Pegawai::all();
         }
 
-
         return view('data_pegawai.index', compact('pegawai'));
     }
 
@@ -268,5 +262,4 @@ class PegawaiController extends Controller
     {
         //
     }
-
 }

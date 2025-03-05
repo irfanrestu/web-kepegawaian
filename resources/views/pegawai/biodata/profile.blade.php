@@ -38,15 +38,15 @@
                 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            @empty($pegawai_id->file_foto)
+                            @empty($pegawai->file_foto)
                                 <img src="{{url('image/nophoto.jpg')}}"
                                     alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
                             @else
-                                <img src="{{ asset('storage/' . $pegawai_id->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 200px; height: auto;">
+                                <img src="{{ asset('storage/' . $pegawai->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 200px; height: auto;">
                             @endempty
                             
-                            <h2>{{ $pegawai_id->nama_lengkap }}</h2>
-                            <h3>{{ $pegawai_id->statuspegawai->status_pegawai }}</h3>
+                            <h2>{{ $pegawai->nama_lengkap }}</h2>
+                            <h3>{{ $pegawai->statuspegawai->status_pegawai }}</h3>
                             <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -77,7 +77,7 @@
 
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings"
-                                        aria-selected="false" tabindex="-1" role="tab">Settings</button>
+                                        aria-selected="false" tabindex="-1" role="tab">Change Role</button>
                                 </li>
 
                                 <li class="nav-item" role="presentation">
@@ -96,122 +96,122 @@
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Name Lengkap</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->nama_lengkap }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->nama_lengkap }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Gelar Depan</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->gelar_depan }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->gelar_depan }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Gelar Belakang</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->gelar_belakang }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->gelar_belakang }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">NIP</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->nip }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->nip }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">NPWP</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->npwp }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->npwp }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">No Kartu Pegawai</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->no_karpeg }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->no_karpeg }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">No BPJS</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->no_bpjs }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->no_bpjs }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">No Kartu Keluarga</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->no_kartu_keluarga }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->no_kartu_keluarga }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">NIK</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->no_nik }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->no_nik }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Status Pegawai</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->statuspegawai->status_pegawai }}
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->statuspegawai->status_pegawai }}
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Tempat Lahir</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->tempat_lahir }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->tempat_lahir }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Tanggal Lahir</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->tanggal_lahir }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->tanggal_lahir }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Jenis Kelamin</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->jenis_kelamin }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->jenis_kelamin }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Agama</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->agama->nama_agama }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->agama->nama_agama }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">No HP</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->no_hp }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->no_hp }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Email</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->email }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->email }}</div>
                                     </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Alamat</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->alamat_lengkap }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->alamat_lengkap }}</div>
                                         <div class="col-lg-3 col-md-4 label">RT</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->rt }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->rt }}</div>
                                         <div class="col-lg-3 col-md-4 label">RW</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->rw }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->rw }}</div>
                                         <div class="col-lg-3 col-md-4 label">Kelurahan</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->kelurahan }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->kelurahan }}</div>
                                         <div class="col-lg-3 col-md-4 label">Kota/Kabupaten</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->kota_kabupaten }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->kota_kabupaten }}</div>
                                         <div class="col-lg-3 col-md-4 label">Kode Pos</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->kode_pos }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->kode_pos }}</div>
                                         <div class="col-lg-3 col-md-4 label">Homebase</div>
                                         <div class="col-lg-1 col-md-4 label">:</div>
-                                        <div class="col-lg-8 col-md-8">{{ $pegawai_id->homebase }}</div>
+                                        <div class="col-lg-8 col-md-8">{{ $pegawai->homebase }}</div>
                                     </div>
 
 
@@ -347,48 +347,30 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-settings" role="tabpanel">
+                                
 
-                                    <!-- Settings Form -->
-                                    <form>
+                                    <!-- Role Change Form -->
+                                    <form action="{{ route('pegawai.change-role', $pegawai->pegawai_id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
                                         <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email
-                                                Notifications</label>
+                                            <label for="role_id" class="col-md-4 col-lg-3 col-form-label">Select Role</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="changesMade"
-                                                        checked="">
-                                                    <label class="form-check-label" for="changesMade">
-                                                        Changes made to your account
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="newProducts"
-                                                        checked="">
-                                                    <label class="form-check-label" for="newProducts">
-                                                        Information on new products and services
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="proOffers">
-                                                    <label class="form-check-label" for="proOffers">
-                                                        Marketing and promo offers
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="securityNotify"
-                                                        checked="" disabled="">
-                                                    <label class="form-check-label" for="securityNotify">
-                                                        Security alerts
-                                                    </label>
-                                                </div>
+                                                <select name="role_id" id="role_id" class="form-control" required>
+                                                    @foreach($rolelist as $role)
+                                                        <option value="{{ $role->role_id }}" {{ $pegawai->user->id_role == $role->role_id ? 'selected' : '' }}>
+                                                            {{ $role->nama_role }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary">Change Role</button>
                                         </div>
-                                    </form><!-- End settings Form -->
+                                    </form><!-- End Role Change Form -->
 
                                 </div>
 

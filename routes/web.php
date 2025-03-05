@@ -39,9 +39,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
     Route::get('/pegawai/biodata/edit/{pegawai}', [PegawaiController::class, 'edit'])->name('biodata.edit');
     Route::put('/pegawai/biodata/{pegawai}', [PegawaiController::class, 'update'])->name('biodata.update');
-    Route::get('/pegawai/biodata/profile{pegawai_id}', [PegawaiController::class, 'profile'])->name('biodata.profile');
-    Route::delete('/pegawai/biodata/delete{pegawai_id}', [PegawaiController::class, 'destroy'])->name('biodata.destroy');
+    Route::get('/pegawai/biodata/profile{pegawai}', [PegawaiController::class, 'profile'])->name('biodata.profile');
+    Route::delete('/pegawai/biodata/delete{pegawai}', [PegawaiController::class, 'destroy'])->name('biodata.destroy');
     Route::put('/pegawai/change-password', [PegawaiController::class, 'changePassword'])->name('pegawai.change-password');
+    
+    // Fitur exclusive untuk admin
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::put('/pegawai/{pegawai}/change-role', [PegawaiController::class, 'changeRole'])->name('pegawai.change-role');
+    });
     //Akhir bagian halaman Biodata Pegawai
 
     Route::get('/riwayat_jabatan', [RiwayatJabatanController::class, 'index'])->name('riwayat_jabatan.index');
