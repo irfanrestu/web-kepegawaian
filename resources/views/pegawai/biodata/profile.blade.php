@@ -16,10 +16,26 @@
             </nav>
         </div><!-- End Page Title -->
 
+        @if(session('success'))
+            <div class="alert alert-success">
+            {{ session('success') }}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="alert alert-danger">
+            <ul>
+            @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+            @endforeach
+                    </ul>
+                </div>
+            @endif
+
         <section class="section profile">
             <div class="row">
                 <div class="col-xl-4">
-                  
+                
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             @empty($pegawai_id->file_foto)
@@ -377,33 +393,30 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-change-password" role="tabpanel">
-                                    <!-- Change Password Form -->
-                                    <form>
+                                
+                                     <!-- Change Password Form -->
+                                    <form action="{{ route('pegawai.change-password') }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
 
                                         <div class="row mb-3">
-                                            <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
-                                                Password</label>
+                                            <label for="current_password" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="currentPassword">
+                                                <input name="current_password" type="password" class="form-control" id="current_password" required>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
-                                                Password</label>
+                                            <label for="new_password" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="newpassword" type="password" class="form-control"
-                                                    id="newPassword">
+                                                <input name="new_password" type="password" class="form-control" id="new_password" required>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New
-                                                Password</label>
+                                            <label for="new_password_confirmation" class="col-md-4 col-lg-3 col-form-label">Confirm New Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="renewpassword" type="password" class="form-control"
-                                                    id="renewPassword">
+                                                <input name="new_password_confirmation" type="password" class="form-control" id="new_password_confirmation" required>
                                             </div>
                                         </div>
 

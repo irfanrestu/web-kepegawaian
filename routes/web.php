@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/pegawai/biodata/{pegawai}', [PegawaiController::class, 'update'])->name('biodata.update');
     Route::get('/pegawai/biodata/profile{pegawai_id}', [PegawaiController::class, 'profile'])->name('biodata.profile');
     Route::delete('/pegawai/biodata/delete{pegawai_id}', [PegawaiController::class, 'destroy'])->name('biodata.destroy');
+    Route::put('/pegawai/change-password', [PegawaiController::class, 'changePassword'])->name('pegawai.change-password');
     //Akhir bagian halaman Biodata Pegawai
 
     Route::get('/riwayat_jabatan', [RiwayatJabatanController::class, 'index'])->name('riwayat_jabatan.index');

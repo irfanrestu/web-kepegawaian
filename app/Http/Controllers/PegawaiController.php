@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Models\StatusPegawais;
 use App\Models\Agama;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -221,6 +224,31 @@ class PegawaiController extends Controller
 
 
         return view('pegawai.biodata.profile', compact('pegawai_id')); 
+    }
+
+    public function changePassword(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        // Get the authenticated user
+        $user = Auth::user();
+
+        // Check if the current password matches
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+        }
+
+        // Update the password
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        // Redirect back with a success message
+        return back()->with('success', 'Password changed successfully.');
     }
 
     //Bagian Data_pegawai Tabs
