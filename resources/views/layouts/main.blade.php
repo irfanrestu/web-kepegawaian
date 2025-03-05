@@ -213,7 +213,11 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+          @if(auth()->user()->pegawai && auth()->user()->pegawai->file_foto)
+            <img src="{{ asset('storage/' . auth()->user()->pegawai->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 40px; height: 40px;">
+          @else
+            <img src="{{ url('image/nophoto.jpg') }}" alt="Foto Default" class="rounded" style="width: 40px; height: 40px;">
+          @endif
             <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->name}}</span>
           </a><!-- End Profile Iamge Icon -->
 

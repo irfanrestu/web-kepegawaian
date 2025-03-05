@@ -57,9 +57,9 @@
                                                 <td> {{ $p->no_hp }} </td>
                                                 <td>
                                                     <a href="{{ route('biodata.profile', $p->pegawai_id) }}"
-                                                        class="btn btn-sm btn-info">Profile</a>
-                                                    <a href="{{ route('biodata.edit', $p->pegawai_id, ) }}"
-                                                        class="btn btn-sm btn-success">edit</a>
+                                                        class="btn btn-sm btn-info">Pengaturan</a>
+                                                   <!-- <a href="{{ route('biodata.edit', $p->pegawai_id, ) }}"
+                                                        class="btn btn-sm btn-success">edit</a> -->
                                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal{{$p->pegawai_id}}">
                                                         Hapus

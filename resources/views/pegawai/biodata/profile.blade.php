@@ -223,123 +223,214 @@
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit" role="tabpanel">
 
                                     <!-- Profile Edit Form -->
-                                    <form>
+                                    <!-- Profile Edit Form -->
+                                    <form action="{{ route('biodata.update', $pegawai->pegawai_id) }}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PUT')
+
                                         <div class="row mb-3">
-                                            <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile
-                                                Image</label>
+                                            <label for="file_foto" class="col-md-4 col-lg-3 col-form-label">Foto Profile</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <img src="assets/img/profile-img.jpg" alt="Profile">
                                                 <div class="pt-2">
-                                                    <a href="#" class="btn btn-primary btn-sm"
-                                                        title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                                    <a href="#" class="btn btn-danger btn-sm"
-                                                        title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                                                    <label for="file_foto" class="btn btn-outline-primary" title="Upload new profile image">
+                                                        <i class="bi bi-upload"></i>
+                                                        <input type="file" class="form-control d-none" id="file_foto" name="file_foto" onchange="previewImage(event)">
+                                                    </label>
+                                                    <button type="button" class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removePhoto()">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <!-- Hidden input to indicate photo removal -->
+                                        <input type="hidden" name="remove_photo" id="remove_photo" value="0">
+
                                         <div class="row mb-3">
-                                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                            <label for="nama_lengkap" class="col-md-4 col-lg-3 col-form-label">Nama Lengkap</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="fullName" type="text" class="form-control" id="fullName"
-                                                    value="Kevin Anderson">
+                                                <input name="nama_lengkap" type="text" class="form-control" id="nama_lengkap" value="{{ $pegawai->nama_lengkap }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                                            <label for="gelar_depan" class="col-md-4 col-lg-3 col-form-label">Gelar Depan</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <textarea name="about" class="form-control" id="about"
-                                                    style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                                                <input name="gelar_depan" type="text" class="form-control" id="gelar_depan" value="{{ $pegawai->gelar_depan }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                                            <label for="gelar_belakang" class="col-md-4 col-lg-3 col-form-label">Gelar Belakang</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="company" type="text" class="form-control" id="company"
-                                                    value="Lueilwitz, Wisoky and Leuschke">
+                                                <input name="gelar_belakang" type="text" class="form-control" id="gelar_belakang" value="{{ $pegawai->gelar_belakang }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                                            <label for="nip" class="col-md-4 col-lg-3 col-form-label">NIP</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="job" type="text" class="form-control" id="Job"
-                                                    value="Web Designer">
+                                                <input name="nip" type="text" class="form-control" id="nip" value="{{ $pegawai->nip }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                                            <label for="npwp" class="col-md-4 col-lg-3 col-form-label">NPWP</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="country" type="text" class="form-control" id="Country"
-                                                    value="USA">
+                                                <input name="npwp" type="text" class="form-control" id="npwp" value="{{ $pegawai->npwp }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                            <label for="no_karpeg" class="col-md-4 col-lg-3 col-form-label">No Kartu Pegawai</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="address" type="text" class="form-control" id="Address"
-                                                    value="A108 Adam Street, New York, NY 535022">
+                                                <input name="no_karpeg" type="text" class="form-control" id="no_karpeg" value="{{ $pegawai->no_karpeg }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <label for="no_bpjs" class="col-md-4 col-lg-3 col-form-label">No BPJS</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="phone" type="text" class="form-control" id="Phone"
-                                                    value="(436) 486-3538 x29071">
+                                                <input name="no_bpjs" type="text" class="form-control" id="no_bpjs" value="{{ $pegawai->no_bpjs }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <label for="no_kartu_keluarga" class="col-md-4 col-lg-3 col-form-label">No Kartu Keluarga</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email" class="form-control" id="Email"
-                                                    value="k.anderson@example.com">
+                                                <input name="no_kartu_keluarga" type="text" class="form-control" id="no_kartu_keluarga" value="{{ $pegawai->no_kartu_keluarga }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter
-                                                Profile</label>
+                                            <label for="no_nik" class="col-md-4 col-lg-3 col-form-label">NIK</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="twitter" type="text" class="form-control" id="Twitter"
-                                                    value="https://twitter.com/#">
+                                                <input name="no_nik" type="text" class="form-control" id="no_nik" value="{{ $pegawai->no_nik }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook
-                                                Profile</label>
+                                            <label for="id_status_pegawai" class="col-md-4 col-lg-3 col-form-label">Status Pegawai</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="facebook" type="text" class="form-control" id="Facebook"
-                                                    value="https://facebook.com/#">
+                                                <select name="id_status_pegawai" id="id_status_pegawai" class="form-control">
+                                                    @foreach($liststatuspegawai as $status)
+                                                        <option value="{{ $status->status_pegawai_id }}" {{ $pegawai->id_status_pegawai == $status->status_pegawai_id ? 'selected' : '' }}>
+                                                            {{ $status->status_pegawai }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram
-                                                Profile</label>
+                                            <label for="tempat_lahir" class="col-md-4 col-lg-3 col-form-label">Tempat Lahir</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="instagram" type="text" class="form-control" id="Instagram"
-                                                    value="https://instagram.com/#">
+                                                <input name="tempat_lahir" type="text" class="form-control" id="tempat_lahir" value="{{ $pegawai->tempat_lahir }}">
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin
-                                                Profile</label>
+                                            <label for="tanggal_lahir" class="col-md-4 col-lg-3 col-form-label">Tanggal Lahir</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="linkedin" type="text" class="form-control" id="Linkedin"
-                                                    value="https://linkedin.com/#">
+                                                <input name="tanggal_lahir" type="date" class="form-control" id="tanggal_lahir" value="{{ $pegawai->tanggal_lahir }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="jenis_kelamin" class="col-md-4 col-lg-3 col-form-label">Jenis Kelamin</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
+                                                    <option value="Laki-laki" {{ $pegawai->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                                                    <option value="Perempuan" {{ $pegawai->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="id_agama" class="col-md-4 col-lg-3 col-form-label">Agama</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <select name="id_agama" id="id_agama" class="form-control">
+                                                    @foreach($listagama as $agama)
+                                                        <option value="{{ $agama->agama_id }}" {{ $pegawai->id_agama == $agama->agama_id ? 'selected' : '' }}>
+                                                            {{ $agama->nama_agama }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="no_hp" class="col-md-4 col-lg-3 col-form-label">No Hp</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="no_hp" type="text" class="form-control" id="no_hp" value="{{ $pegawai->no_hp }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="email" type="email" class="form-control" id="email" value="{{ $pegawai->email }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="alamat_lengkap" class="col-md-4 col-lg-3 col-form-label">Alamat</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <textarea name="alamat_lengkap" class="form-control" id="alamat_lengkap" style="height: 100px">{{ $pegawai->alamat_lengkap }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="rt" class="col-md-4 col-lg-3 col-form-label">RT</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="rt" type="text" class="form-control" id="rt" value="{{ $pegawai->rt }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="rw" class="col-md-4 col-lg-3 col-form-label">RW</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="rw" type="text" class="form-control" id="rw" value="{{ $pegawai->rw }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="kelurahan" class="col-md-4 col-lg-3 col-form-label">Kelurahan</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="kelurahan" type="text" class="form-control" id="kelurahan" value="{{ $pegawai->kelurahan }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="kecamatan" class="col-md-4 col-lg-3 col-form-label">Kecamatan</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="kecamatan" type="text" class="form-control" id="kecamatan" value="{{ $pegawai->kecamatan }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="kota_kabupaten" class="col-md-4 col-lg-3 col-form-label">Kabupaten/Kota</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="kota_kabupaten" type="text" class="form-control" id="kota_kabupaten" value="{{ $pegawai->kota_kabupaten }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="kode_pos" class="col-md-4 col-lg-3 col-form-label">Kode Pos</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="kode_pos" type="text" class="form-control" id="kode_pos" value="{{ $pegawai->kode_pos }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="homebase" class="col-md-4 col-lg-3 col-form-label">Homebase</label>
+                                            <div class="col-md-8 col-lg-9">
+                                                <input name="homebase" type="text" class="form-control" id="homebase" value="{{ $pegawai->homebase }}">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
                                         </div>
                                     </form>
                                     <!-- End Profile Edit Form -->
@@ -420,4 +511,46 @@
 
 
     </main>
+
+     <!-- untuk priview foto -->
+  <script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        const imageElement = document.querySelector('img.rounded');
+
+        reader.onload = function() {
+            if (reader.readyState === 2) {
+                imageElement.src = reader.result;
+            }
+        };
+
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+    function removeImage() {
+        const imageElement = document.querySelector('img.rounded');
+        const fileInput = document.getElementById('file_foto');
+
+        // Reset the file input
+        fileInput.value = '';
+
+        // Set the image back to the default or placeholder
+        imageElement.src = "{{ asset('storage/' . $pegawai->file_foto) }}";
+    }
+</script>
+
+<script>
+    function removePhoto() {
+        // Set the hidden input value to 1 (indicating photo removal)
+        document.getElementById('remove_photo').value = '1';
+
+        // Update the image preview to show a placeholder
+        const imageElement = document.querySelector('img.rounded');
+        imageElement.src = "{{ asset('image/nophoto.jpg') }}";
+
+        // Clear the file input (if any)
+        const fileInput = document.getElementById('file_foto');
+        fileInput.value = '';
+    }
+</script>
 @endsection

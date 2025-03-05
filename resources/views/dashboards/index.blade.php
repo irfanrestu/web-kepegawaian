@@ -1,7 +1,11 @@
 @extends('layouts.main')
 @section('content')
 <main id="main" class="main">
-
+@if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
     <div class="pagetitle">
       <h1>Dashboard</h1>
       <nav>

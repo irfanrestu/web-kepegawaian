@@ -16,10 +16,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'Admin') {
+        if (Auth::check() && Auth::user()->role === 'id_role == 1') {
             return $next($request);
         }
 
-        return redirect('/')->with('error', 'You do not have permission to access this page.');
+        return redirect('/dashboard')->with('error', 'You do not have permission to access this page.');
     }
 }

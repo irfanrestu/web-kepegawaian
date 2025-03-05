@@ -202,7 +202,9 @@ class PegawaiController extends Controller
     {
         $rolelist = Role::all();
         $userlist = User::all();
-        return view('pegawai.biodata.profile', compact('pegawai', 'rolelist','userlist'));
+        $liststatuspegawai = StatusPegawais::all();
+        $listagama = Agama::all();
+        return view('pegawai.biodata.profile', compact('pegawai', 'rolelist','userlist','liststatuspegawai','listagama'));
     }
 
     public function changePassword(Request $request)
