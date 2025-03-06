@@ -12,7 +12,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\RiwayatKepegawaianController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\DokumenController;
-
+use App\Http\Controllers\InformasiController;
 
 Route::get('/', function () {
     return view('homepage.index');
@@ -72,6 +72,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/dokumen_pendukung/update/{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
     Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
     //Akhir bagian halaman Dokumen Pendukung
+
+    //Fitur melihat informasi
+    Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi.index');
 
     //fitur exclusive admin dan pegawai konten
     Route::middleware('konten')->group(function () {
