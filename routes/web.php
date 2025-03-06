@@ -9,7 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\RiwayatJabatanController;
+use App\Http\Controllers\RiwayatKepegawaianController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\InformasiController;
@@ -52,13 +52,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Akhir bagian halaman Biodata Pegawai
 
-    Route::get('/riwayat_jabatan', [RiwayatJabatanController::class, 'index'])->name('riwayat_jabatan.index');
-    Route::get('/riwayat_jabatan/create', [RiwayatJabatanController::class, 'create'])->name('riwayat_jabatan.create');
-    Route::post('/riwayat_jabatan/store', [RiwayatJabatanController::class, 'store'])->name('riwayat_jabatan.store');
-    Route::get('/riwayat_jabatan/edit{id}', [RiwayatJabatanController::class, 'edit'])->name('riwayat_jabatan.edit');
-    Route::put('/riwayat_jabatan/update{id}', [RiwayatJabatanController::class, 'update'])->name('riwayat_jabatan.update');
-    Route::delete('/riwayat_jabatan/delete{id}', [RiwayatJabatanController::class, 'destroy'])->name('riwayat_jabatan.destroy');
-    //Akhir bagian halaman Riwayat Jabatan
+    Route::get('/riwayat_Kepegawaian', [RiwayatKepegawaianController::class, 'index'])->name('riwayat_Kepegawaian.index');
+    Route::get('/riwayat_Kepegawaian/create', [RiwayatKepegawaianController::class, 'create'])->name('riwayat_Kepegawaian.create');
+    Route::post('/riwayat_Kepegawaian/store', [RiwayatKepegawaianController::class, 'store'])->name('riwayat_Kepegawaian.store');
+    Route::get('/riwayat_Kepegawaian/edit{id}', [RiwayatKepegawaianController::class, 'edit'])->name('riwayat_Kepegawaian.edit');
+    Route::put('/riwayat_Kepegawaian/update{id}', [RiwayatKepegawaianController::class, 'update'])->name('riwayat_Kepegawaian.update');
+    Route::delete('/riwayat_Kepegawaian/delete{id}', [RiwayatKepegawaianController::class, 'destroy'])->name('riwayat_Kepegawaian.destroy');
+    //Akhir bagian halaman Riwayat Kepegawaian
 
     Route::get('/riwayat_pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat_pendidikan.index');
     Route::get('/riwayat_pendidikan/create', [RiwayatPendidikanController::class, 'create'])->name('riwayat_pendidikan.create');
