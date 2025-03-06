@@ -189,7 +189,7 @@ class PegawaiController extends Controller
             'homebase' => $request->input('homebase'),
         ]);
 
-        return redirect()->route('biodata.index')->with('success', 'Data pegawai berhasil diperbarui.');
+        return back()->with('success', 'Data Pegawai berhasil diperbarui.');
     }
 
     public function destroy(Pegawai $pegawai_id)

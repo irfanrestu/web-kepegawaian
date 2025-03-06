@@ -231,6 +231,11 @@
                                         <div class="row mb-3">
                                             <label for="file_foto" class="col-md-4 col-lg-3 col-form-label">Foto Profile</label>
                                             <div class="col-md-8 col-lg-9">
+                                            @if($pegawai->file_foto)
+                                                    <img src="{{ asset('storage/' . $pegawai->file_foto) }}" alt="Profile" class="editrounded" style="width: 100px; height: auto;">
+                                                @else
+                                                    <img src="{{ asset('image/nophoto.jpg') }}" alt="Profile" class="editrounded" style="width: 100px; height: auto;">
+                                                @endif
                                                 <div class="pt-2">
                                                     <label for="file_foto" class="btn btn-outline-primary" title="Upload new profile image">
                                                         <i class="bi bi-upload"></i>
@@ -516,7 +521,7 @@
   <script>
     function previewImage(event) {
         const reader = new FileReader();
-        const imageElement = document.querySelector('img.rounded');
+        const imageElement = document.querySelector('img.editrounded');
 
         reader.onload = function() {
             if (reader.readyState === 2) {
@@ -528,7 +533,7 @@
     }
 
     function removeImage() {
-        const imageElement = document.querySelector('img.rounded');
+        const imageElement = document.querySelector('img.editrounded');
         const fileInput = document.getElementById('file_foto');
 
         // Reset the file input
@@ -545,7 +550,7 @@
         document.getElementById('remove_photo').value = '1';
 
         // Update the image preview to show a placeholder
-        const imageElement = document.querySelector('img.rounded');
+        const imageElement = document.querySelector('img.editrounded');
         imageElement.src = "{{ asset('image/nophoto.jpg') }}";
 
         // Clear the file input (if any)
