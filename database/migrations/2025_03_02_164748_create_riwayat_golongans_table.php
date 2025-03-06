@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,7 +12,6 @@ return new class extends Migration
     {
         Schema::create('riwayat_golongans', function (Blueprint $table) {
             $table->id('riwayat_golongan_id');
-            $table->foreignId('id_pegawai')->references('pegawai_id')->on('pegawais')->onUpdate('cascade')->onDelete('cascade');
             $table->string('pangkat_golongan');
             $table->string('jenis_kenaikan')->nullable();
             $table->string('masa_kerja_tahun')->nullable();

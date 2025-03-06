@@ -10,7 +10,7 @@ use App\Models\StatusPegawais;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\Dokumen;
 use App\Models\RiwayatPendidikan;
-use App\Models\RiwayatJabatan;
+use App\Models\RiwayatKepegawaian;
 
 class Pegawai extends Model
 {
@@ -73,5 +73,10 @@ class Pegawai extends Model
     public function riwayatPendidikan()
     {
         return $this->hasMany(RiwayatPendidikan::class, 'id_pegawai', 'pegawai_id');
+    }
+
+    public function riwayatKepegawaian()
+    {
+        return $this->hasMany(RiwayatKepegawaian::class, 'id_pegawai', 'pegawai_id');
     }
 }

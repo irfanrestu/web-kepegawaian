@@ -31,8 +31,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('riwayat_jabatan.index') }}">
-                        <i class="bi bi-circle"></i><span>Riwayat Jabatan</span>
+                    <a href="{{ route('riwayat_kepegawaian.index') }}">
+                        <i class="bi bi-circle"></i><span>Riwayat Kepegawaian</span>
                     </a>
                 </li>
                 <li>
@@ -57,13 +57,13 @@
         </li>
         <!-- End Profil Nav -->
         @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('post.index') }}">
-                <i class="bi bi-journal-text"></i><span>Post Artikel</span>
-            </a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('post.index') }}">
+                    <i class="bi bi-journal-text"></i><span>Post Artikel</span>
+                </a>
+            </li>
         @endif
-    <!-- End Post Artikel Nav -->
+        <!-- End Post Artikel Nav -->
 
     </ul>
 
