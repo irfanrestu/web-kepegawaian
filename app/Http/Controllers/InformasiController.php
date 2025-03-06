@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agama;
+use App\Models\Pegawai;
 use App\Models\Post;
 use App\Models\Role;
 use App\Models\StatusPegawais;
@@ -11,12 +12,14 @@ use Illuminate\Http\Request;
 
 class InformasiController extends Controller
 {
-    public function index(Post $post)
+    public function index()
     {
-        $rolelist = Role::all();
-        $userlist = User::all();
-        $liststatuspegawai = StatusPegawais::all();
-        $listagama = Agama::all();
-        return view('informasi.index', compact('post', 'rolelist','userlist','liststatuspegawai','listagama'));
+        $posts = Post::all();
+        $role = Role::all();
+        $user = User::all();
+        $statuspegawai = StatusPegawais::all();
+        $agama = Agama::all();
+        $pegawai = Pegawai::all();
+        return view('informasi.index', compact('posts', 'role','user','statuspegawai','pegawai'));
     }
 }

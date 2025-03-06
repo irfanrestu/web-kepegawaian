@@ -11,6 +11,7 @@ class Post extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $date = ['created_at'];
     protected $table = 'posts';
     protected $primarykey = "post_id";
     /**
