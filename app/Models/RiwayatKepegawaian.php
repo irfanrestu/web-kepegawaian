@@ -11,7 +11,7 @@ use App\Models\Unit;
 
 class RiwayatKepegawaian extends Model
 {
-    protected $table = 'riwayat_kepegawaians';
+
     protected $primaryKey = 'riwayat_kepegawaian_id';
     protected $fillable = [
         'id_pegawai',

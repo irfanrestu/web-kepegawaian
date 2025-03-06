@@ -20,13 +20,14 @@ class RiwayatKepegawaianController extends Controller
         $riwayatJabatans = RiwayatJabatan::all();
         $riwayatGolongans = RiwayatGolongan::all();
         $units = Unit::all();
+        $jenisJabatans = JenisJabatan::all();
         $riwayatKepegawaians = RiwayatKepegawaian::where('id_pegawai', auth()->user()->id_pegawai)
             ->with('riwayatJabatan')
             ->with('riwayatGolongan')
             ->with('Unit')
             ->get();
         $riwayatJabatans = RiwayatJabatan::with('jenisJabatan')->get();
-        return view('riwayat_pendidikan.index', compact('riwayatKepegawaians', 'riwayatJabatans', 'riwayatGolongans', 'units'));
+        return view('riwayat_kepegawaian.index', compact('riwayatKepegawaians', 'riwayatJabatans', 'jenisJabatans', 'riwayatGolongans', 'units'));
     }
 
     /**
@@ -67,7 +68,7 @@ class RiwayatKepegawaianController extends Controller
         ]);
 
         // Redirect dengan pesan sukses
-        return redirect()->route('riwayat-kepegawaian.index')->with('success', 'Data riwayat jabatan berhasil ditambahkan.');
+        return redirect()->route('riwayat_kepegawaian.index')->with('success', 'Data riwayat jabatan berhasil ditambahkan.');
     }
 
     /**

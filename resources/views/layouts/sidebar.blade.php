@@ -12,7 +12,7 @@
         <!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('informasi.index') }}">
+            <a class="nav-link" href="">
                 <i class="bi bi-journal-text"></i><span>Informasi</span>
             </a>
         </li>

@@ -42,22 +42,22 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/pegawai/biodata/profile{pegawai}', [PegawaiController::class, 'profile'])->name('biodata.profile');
     Route::delete('/pegawai/biodata/delete{pegawai}', [PegawaiController::class, 'destroy'])->name('biodata.destroy');
     Route::put('/pegawai/change-password', [PegawaiController::class, 'changePassword'])->name('pegawai.change-password');
-    
+
     // Fitur exclusive untuk admin
     Route::middleware('admin')->group(function () {
         Route::put('/pegawai/{pegawai}/change-role', [PegawaiController::class, 'changeRole'])->name('pegawai.change-role');
     });
 
-    
+
 
     //Akhir bagian halaman Biodata Pegawai
 
-    Route::get('/riwayat_Kepegawaian', [RiwayatKepegawaianController::class, 'index'])->name('riwayat_Kepegawaian.index');
-    Route::get('/riwayat_Kepegawaian/create', [RiwayatKepegawaianController::class, 'create'])->name('riwayat_Kepegawaian.create');
-    Route::post('/riwayat_Kepegawaian/store', [RiwayatKepegawaianController::class, 'store'])->name('riwayat_Kepegawaian.store');
-    Route::get('/riwayat_Kepegawaian/edit{id}', [RiwayatKepegawaianController::class, 'edit'])->name('riwayat_Kepegawaian.edit');
-    Route::put('/riwayat_Kepegawaian/update{id}', [RiwayatKepegawaianController::class, 'update'])->name('riwayat_Kepegawaian.update');
-    Route::delete('/riwayat_Kepegawaian/delete{id}', [RiwayatKepegawaianController::class, 'destroy'])->name('riwayat_Kepegawaian.destroy');
+    Route::get('/riwayat_kepegawaian', [RiwayatKepegawaianController::class, 'index'])->name('riwayat_kepegawaian.index');
+    Route::get('/riwayat_kepegawaian/create', [RiwayatKepegawaianController::class, 'create'])->name('riwayat_kepegawaian.create');
+    Route::post('/riwayat_kepegawaian/store', [RiwayatKepegawaianController::class, 'store'])->name('riwayat_kepegawaian.store');
+    Route::get('/riwayat_kepegawaian/edit{id}', [RiwayatKepegawaianController::class, 'edit'])->name('riwayat_kepegawaian.edit');
+    Route::put('/riwayat_kepegawaian/update{id}', [RiwayatKepegawaianController::class, 'update'])->name('riwayat_kepegawaian.update');
+    Route::delete('/riwayat_kepegawaian/delete{id}', [RiwayatKepegawaianController::class, 'destroy'])->name('riwayat_kepegawaian.destroy');
     //Akhir bagian halaman Riwayat Kepegawaian
 
     Route::get('/riwayat_pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat_pendidikan.index');
@@ -76,9 +76,9 @@ Route::group(['middleware' => 'auth'], function () {
     //fitur exclusive admin dan pegawai konten
     Route::middleware('konten')->group(function () {
         //Rute Post Artikel
-        
+
         Route::get('/post', [PostController::class, 'index'])->name('post.index');
         Route::get('/{slug}', [PostController::class, 'singlepost'])->name('post.singlepost');
-    
-        });
+
+    });
 });

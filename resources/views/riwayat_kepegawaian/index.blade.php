@@ -42,12 +42,12 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" style="width: 10%;">No.</th>
-                                                    <th class="text-center" style="width: 20%;">Jenis Jabatan</th>
+                                                    <th class="text-center" style="width: 15%;">Jenis Jabatan</th>
                                                     <th class="text-center" style="width: 25%;">Nama Jabatan</th>
                                                     <th class="text-center" style="width: 10%;">TMT</th>
                                                     <th class="text-center" style="width: 15%;">Status</th>
                                                     <th class="text-center" style="width: 10%;">Dokumen Jabatan</th>
-                                                    <th class="text-center" style="width: 10%;">Action</th>
+                                                    <th class="text-center" style="width: 15%;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -76,9 +76,7 @@
                                                                 <i class="fas fa-edit"></i> Edit
                                                             </a>
 
-                                                            <form
-                                                                action="{{ }}"
-                                                                method="POST" style="display: inline-block;">
+                                                            <form action="" method="POST" style="display: inline-block;">
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-sm btn-danger"
@@ -135,10 +133,8 @@
                                             <div class="row mb-3">
                                                 <label for="tmt_jabatan" class="col-sm-2 col-form-label">TMT Jabatan</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="tmt_jabatan" id="tmt_jabatan"
-                                                        class="form-control" placeholder="YYYY-MM-DD" required>
-                                                    <small class="text-muted">Format: YYYY-MM-DD (contoh:
-                                                        2023-10-25)</small>
+                                                    <input type="date" name="tmt_jabatan" id="tmt_jabatan"
+                                                        class="form-control" required>
                                                 </div>
                                             </div>
 
@@ -176,6 +172,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
