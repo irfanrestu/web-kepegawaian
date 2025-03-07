@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/riwayat_kepegawaian', [RiwayatKepegawaianController::class, 'index'])->name('riwayat_kepegawaian.index');
     Route::get('/riwayat_kepegawaian/create', [RiwayatKepegawaianController::class, 'create'])->name('riwayat_kepegawaian.create');
     Route::post('/riwayat_kepegawaian/store', [RiwayatKepegawaianController::class, 'store'])->name('riwayat_kepegawaian.store');
+    Route::get('/riwayat_kepegawaian/show{id}', [RiwayatKepegawaianController::class, 'show'])->name('riwayat_kepegawaian.show');
     Route::get('/riwayat_kepegawaian/edit{id}', [RiwayatKepegawaianController::class, 'edit'])->name('riwayat_kepegawaian.edit');
     Route::put('/riwayat_kepegawaian/update{id}', [RiwayatKepegawaianController::class, 'update'])->name('riwayat_kepegawaian.update');
     Route::delete('/riwayat_kepegawaian/delete{id}', [RiwayatKepegawaianController::class, 'destroy'])->name('riwayat_kepegawaian.destroy');

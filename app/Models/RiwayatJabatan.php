@@ -25,9 +25,4 @@ class RiwayatJabatan extends Model
     {
         return $this->hasMany(RiwayatKepegawaian::class, 'id_riwayat_jabatan', 'riwayat_jabatan_id');
     }
-    public function takePdf()
-    {
-        return "/storage/" . $this->file;
-        // return $this->file;
-    }
 }

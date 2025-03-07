@@ -7,6 +7,7 @@
                     <label>Jenjang Pendidikan</label>
                     <select name="id_jenjang_pendidikan"
                         class="form-control @error('id_jenjang_pendidikan') is-invalid @enderror" required>
+                        <option value="">Pilih Jenjang Pendidikan</option>
                         @forelse ($jenjangPendidikans as $jenjang)
                             <option value="{{ $jenjang->jenjang_pendidikan_id }}" {{ old('id_jenjang_pendidikan') == $jenjang->jenjang_pendidikan_id ? 'selected' : '' }}>
                                 {{ $jenjang->jenjang_pendidikan }}
@@ -25,6 +26,7 @@
                 <div class="form-group m-3">
                     <label>Jurusan</label>
                     <select name="id_jurusan" class="form-control @error('id_jurusan') is-invalid @enderror" required>
+                        <option value="">Pilih Jurusan</option>
                         @forelse ($jurusans as $jurusan)
                             <option value="{{ $jurusan->jurusan_id }}" {{ old('id_jurusan') == $jurusan->jurusan_id ? 'selected' : '' }}>
                                 {{ $jurusan->nama_jurusan }}
