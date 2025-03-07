@@ -11,11 +11,13 @@
         </li>
         <!-- End Dashboard Nav -->
 
+        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
         <li class="nav-item">
-            <a class="nav-link" href="">
+            <a class="nav-link" href="{{ route('informasi.index') }}">
                 <i class="bi bi-journal-text"></i><span>Informasi</span>
             </a>
         </li>
+        @endif
         <!-- Informasi -->
 
         <li class="nav-item">

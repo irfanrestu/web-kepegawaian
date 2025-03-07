@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Table Post Artikel</h5>
-                        <a href="" class="btn btn-sm btn-primary">Tambah Artikel</a>
+                        <a href="{{Route('post.create')}}" class="btn btn-sm btn-primary">Tambah Artikel</a>
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover">
                             <thead>
@@ -33,11 +33,11 @@
 
                             </thead>
                             <tbody>
-                              @foreach($post as $po)
+                              @foreach($posts as $po)
                                     <tr>
                                         <th scope="row">                    
                                         @if($po->thumbnail)
-                                                    <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Thumbnail" class="rounded" style="width: 100px; height: auto;">
+                                                    <img src="{{ asset('storage/' . $po->thumbnail) }}" alt="Thumbnail" class="rounded" style="width: 100px; height: auto;">
                                                 @else
                                                     <img src="{{ asset('image/nophoto.jpg') }}" alt="Thumbnail" class="rounded" style="width: 100px; height: auto;">
                                                 @endif

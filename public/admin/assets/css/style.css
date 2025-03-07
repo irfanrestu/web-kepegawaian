@@ -1231,3 +1231,19 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+.blog-item {
+  height: 500px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space evenly */
+  border: 1px solid #ddd; /* Optional: Adds a border for visual clarity */
+  border-radius: 8px; /* Optional: Rounded corners */
+}
+.blog-item-content1{
+  height: 190px; /* Fixed height */
+  overflow: hidden; /* Prevents overflow */
+  
+  flex-direction: column;
+  justify-content: space-between; /* Distributes space evenly */
+}
