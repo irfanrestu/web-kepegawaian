@@ -22,11 +22,15 @@ class DokumenController extends Controller
 
         if ($user->id_role == 1) { // Admin
             // Ambil semua pegawai beserta dokumen yang sudah diunggah
-            $pegawais = Pegawai::with([
-                'dokumens' => function ($query) {
-                    $query->with('kategoriDokumen');
-                }
-            ])->get();
+            $pegawais = Pegawai::whereDoesntHave('user', function ($query) {
+                $query->where('id_role', 1); // Exclude admin
+            })
+                ->with([
+                    'dokumens' => function ($query) {
+                        $query->with('kategoriDokumen');
+                    }
+                ])
+                ->get();
 
             return view('dokumen_pendukung.admin', compact('kategoriDokumens', 'pegawais'));
         } else { // Pegawai
