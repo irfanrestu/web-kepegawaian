@@ -15,9 +15,6 @@ class Post extends Model
 
     use HasSlug;
 
-    /**
-     * Get the options for generating the slug.
-     */
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
@@ -25,9 +22,17 @@ class Post extends Model
             ->saveSlugsTo('slug'); // Field to store the slug in the database
     }
 
+    protected $primaryKey = 'post_id'; // Specify the custom primary key
+    public $incrementing = true; // Ensure Laravel knows the primary key is auto-incrementing
+    protected $keyType = 'int'; // Specify the data type of the primary key
     protected $date = ['created_at'];
     protected $table = 'posts';
-    protected $primarykey = "post_id";
+    /**
+     * Get the options for generating the slug.
+     */
+   
+    
+    
     /**
      * The attributes that are mass assignable.
      *

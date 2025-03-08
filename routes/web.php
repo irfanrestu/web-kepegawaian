@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Akhir bagian halaman Riwayat Pendidikan
 
     Route::get('/dokumen_pendukung', [DokumenController::class, 'index'])->name('dokumen_pendukung.index');
-    Route::get('/dokumen_pendukung', [DokumenController::class, 'index'])->name('dokumen_pendukung.admin');
+    Route::get('/dokumen_pendukung/admin', [DokumenController::class, 'index'])->name('dokumen_pendukung.admin');
     Route::get('/dokumen_pendukung/edit{id}', [DokumenController::class, 'edit'])->name('dokumen_pendukung.edit');
     Route::put('/dokumen_pendukung/update/{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
     Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
@@ -86,6 +86,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/post', [PostController::class, 'index'])->name('post.index');
         Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
         Route::post('/post/store', [PostController::class, 'store'])->name('posts.store');
+        Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])->name('post.edit');
+        Route::put('/post/{post_id}', [PostController::class, 'update'])->name('post.update');
+        Route::delete('/post/delete{post_id}', [PostController::class, 'destroy'])->name('post.destroy');
         Route::get('/{slug}', [PostController::class, 'singlepost'])->name('post.singlepost');
 
     });

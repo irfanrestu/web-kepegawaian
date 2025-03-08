@@ -46,9 +46,9 @@
                                         <td>{{ $po->judul }}  </td>
                                         <td>{{ $po->created_at}}  </td>
                                         <td>
-                                            <a target="_blank" href="{{Route('post.singlepost', $po->slug)}}"
+                                            <a href="{{Route('post.singlepost', $po->slug)}}"
                                                 class="btn btn-sm btn-info">View</a>
-                                            <a href=""
+                                            <a href="{{Route('post.edit', $po->post_id)}}"
                                                 class="btn btn-sm btn-success">Edit</a>
                                             <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal">
@@ -62,7 +62,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus
-                                                                Pegawai</h1>
+                                                                Post</h1>
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
@@ -74,7 +74,7 @@
                                                                 data-bs-dismiss="modal">Close</button>
 
                                                             <form
-                                                                action=""
+                                                                action="{{ route('post.destroy', $po->post_id) }}"
                                                                 method="POST" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')

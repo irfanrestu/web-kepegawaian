@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -47,8 +49,68 @@ class PostController extends Controller
         ]);
 
         // Redirect to a success page or back to the form with a success message
-        return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+        return redirect()->route('post.index')->with('success', 'Post created successfully!');
     }
+
+    public function edit($post_id)
+{
+    $user = User::all();
+    $pegawai = Pegawai::all();
+    $post = Post::where('post_id', $post_id)->first();
+
+    return view('post.edit', compact('post', 'pegawai', 'user'));
+}
+
+public function update(Request $request, $post_id)
+{
+    // Fetch the post by post_id
+    $post = Post::where('post_id', $post_id)->first();
+
+    // Check if the post exists
+    if (!$post) {
+        abort(404, 'Post not found.');
+    }
+
+    // Validate the request data
+    $validatedData = $request->validate([
+        'judul' => 'required|string|max:255',
+        'content' => 'required|string',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Handle file upload (if a new thumbnail is provided)
+    if ($request->hasFile('thumbnail')) {
+        // Delete the old thumbnail (if it exists)
+        if ($post->thumbnail) {
+            Storage::delete($post->thumbnail);
+        }
+
+        // Store the new thumbnail
+        $validatedData['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
+        \Log::info('New thumbnail path:', ['thumbnail' => $validatedData['thumbnail']]);
+    }
+
+    // Handle photo removal
+    if ($request->remove_photo == '1') {
+        if ($post->thumbnail) {
+            Storage::delete($post->thumbnail);
+        }
+        $validatedData['thumbnail'] = null; // Explicitly set thumbnail to null
+    }
+
+    // Debugging: Check the final thumbnail value
+    \Log::info('Final thumbnail value:', ['thumbnail' => $validatedData['thumbnail'] ?? $post->thumbnail]);
+
+    // Update the post
+    $post->update([
+        'judul' => $validatedData['judul'],
+        'content' => $validatedData['content'],
+        'thumbnail' => $validatedData['thumbnail'] ?? $post->thumbnail, // Use the new thumbnail or keep the old one
+        'id_user' => auth()->user()->id,
+    ]);
+
+    return redirect()->route('post.index')->with('success', 'Post updated successfully.');
+}
 
     public function singlepost($slug)
     {
@@ -61,5 +123,11 @@ class PostController extends Controller
 
         // Pass the post to the view
         return view('post.singlepost', compact('post'));
+        }
+
+        public function destroy(Post $post_id)
+        {
+            $post_id->delete();
+            return redirect()->route('post.index')->with('success', 'Data berhasil di hapus');
         }
 }

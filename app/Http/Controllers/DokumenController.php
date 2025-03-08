@@ -7,6 +7,7 @@ use App\Models\KategoriDokumen;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class DokumenController extends Controller
@@ -96,7 +97,7 @@ class DokumenController extends Controller
      */
     public function update(Request $request, Dokumen $dokumen, $id)
     {
-        $validator = \Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'file' => [
                 'required',
                 'file',
