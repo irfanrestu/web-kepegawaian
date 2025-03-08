@@ -16,15 +16,26 @@ class DokumenController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
         // Ambil semua kategori dokumen
         $kategoriDokumens = KategoriDokumen::all();
 
-        // Ambil dokumen yang sudah diupload oleh pengguna yang sedang login
-        $uploadedDokumens = Dokumen::where('id_pegawai', auth()->user()->id_pegawai)
-            ->pluck('file_dokumen', 'id_kategori_dokumen')
-            ->toArray();
+        if ($user->id_role == 1) { // Admin
+            // Ambil semua pegawai beserta dokumen yang sudah diunggah
+            $pegawais = Pegawai::with([
+                'dokumens' => function ($query) {
+                    $query->with('kategoriDokumen');
+                }
+            ])->get();
 
-        return view('dokumen_pendukung.index', compact('kategoriDokumens', 'uploadedDokumens'));
+            return view('dokumen_pendukung.admin', compact('kategoriDokumens', 'pegawais'));
+        } else { // Pegawai
+            // Ambil dokumen yang diunggah oleh pegawai yang login
+            $uploadedDokumens = $user->pegawai->dokumens()
+                ->pluck('file_dokumen', 'id_kategori_dokumen') // Gunakan 'file_dokumen', bukan 'file'
+                ->toArray();
+            return view('dokumen_pendukung.index', compact('kategoriDokumens', 'uploadedDokumens'));
+        }
     }
 
     /**
@@ -57,7 +68,23 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen, $id)
     {
-        //
+        $user = auth()->user();
+        $pegawai = Pegawai::findOrFail($id);
+
+        // Cek otorisasi: Admin bisa mengedit semua data, pegawai hanya bisa mengedit data miliknya
+        if ($user->id_role != 1 && $pegawai->pegawai_id != $user->id_pegawai) {
+            return redirect()->route('dokumen_pendukung.index')
+                ->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
+        }
+
+        // Ambil dokumen yang diunggah oleh pegawai tertentu
+        $uploadedDokumens = $pegawai->dokumens()
+            ->pluck('file_dokumen', 'id_kategori_dokumen')
+            ->toArray();
+
+        $kategoriDokumens = KategoriDokumen::all();
+
+        return view('dokumen_pendukung.edit', compact('pegawai', 'kategoriDokumens', 'uploadedDokumens'));
     }
 
     /**

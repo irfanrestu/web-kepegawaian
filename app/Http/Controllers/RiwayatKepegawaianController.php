@@ -33,6 +33,7 @@ class RiwayatKepegawaianController extends Controller
                 ->with('riwayatJabatan', 'riwayatGolongan', 'unit')
                 ->get();
             $showForm = true;
+            $pegawais = null;
         }
 
         $riwayatJabatans = RiwayatJabatan::all();
@@ -95,9 +96,6 @@ class RiwayatKepegawaianController extends Controller
         try {
             DB::beginTransaction();
 
-            // Log input untuk debugging
-            Log::info('Input data untuk Riwayat Kepegawaian: ', $request->all());
-
             // Simpan file jika ada
             $dokumenJabatanPath = $request->hasFile('dokumen_jabatan')
                 ? $request->file('dokumen_jabatan')->move(public_path('dokumen'), time() . '_' . $request->file('dokumen_jabatan')->getClientOriginalName())
@@ -122,7 +120,6 @@ class RiwayatKepegawaianController extends Controller
             if (!$riwayatJabatan->riwayat_jabatan_id) {
                 throw new \Exception('Gagal menyimpan data riwayat jabatan. riwayat_jabatan_id tidak dihasilkan.');
             }
-            Log::info('Riwayat Jabatan tersimpan dengan riwayat_jabatan_id: ' . $riwayatJabatan->riwayat_jabatan_id);
 
             // Simpan data Riwayat Golongan
             $riwayatGolongan = new RiwayatGolongan();
@@ -141,7 +138,6 @@ class RiwayatKepegawaianController extends Controller
             if (!$riwayatGolongan->riwayat_golongan_id) {
                 throw new \Exception('Gagal menyimpan data riwayat golongan. ID tidak dihasilkan.');
             }
-            Log::info('Riwayat Golongan tersimpan dengan riwayat_golongan_id: ' . $riwayatGolongan->riwayat_golongan_id);
 
             // Tentukan id_pegawai berdasarkan role
             $idPegawai = $user->id_role == 1 && $request->has('id_pegawai')
@@ -159,7 +155,6 @@ class RiwayatKepegawaianController extends Controller
             if (!$riwayatKepegawaian->riwayat_kepegawaian_id) { // Asumsi primary key default 'id' untuk RiwayatKepegawaian
                 throw new \Exception('Gagal menyimpan data riwayat kepegawaian. ID tidak dihasilkan.');
             }
-            Log::info('Riwayat Kepegawaian tersimpan dengan ID: ' . $riwayatKepegawaian->riwayat_kepegawaian_id);
 
             DB::commit();
             return redirect()->route('riwayat_kepegawaian.index')
@@ -178,7 +173,6 @@ class RiwayatKepegawaianController extends Controller
                 unlink(public_path($dokumenPerjanjianPath));
             }
 
-            Log::error('Error saat menyimpan data: ' . $e->getMessage());
             return redirect()->route('riwayat_kepegawaian.index')
                 ->with('error', 'Terjadi kesalahan saat menambah data: ' . $e->getMessage())
                 ->withInput();
@@ -209,9 +203,9 @@ class RiwayatKepegawaianController extends Controller
     public function edit(string $id)
     {
         $user = auth()->user();
-        $riwayatKepegawaian = RiwayatKepegawaian::with('riwayatJabatan', 'riwayatGolongan', 'unit')->findOrFail($id);
+        $riwayatKepegawaians = RiwayatKepegawaian::with('riwayatJabatan', 'riwayatGolongan', 'unit', 'pegawai')->findOrFail($id);
 
-        if ($user->id_role !== 1 && $riwayatKepegawaian->id_pegawai !== $user->id_pegawai) {
+        if ($user->id_role !== 1 && $riwayatKepegawaians->id_pegawai !== $user->id_pegawai) {
             return redirect()->route('riwayat_kepegawaian.index')
                 ->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
         }
@@ -220,7 +214,7 @@ class RiwayatKepegawaianController extends Controller
         $units = Unit::all();
         $pegawais = $user->id_role == 1 ? Pegawai::all() : null;
 
-        return view('riwayat_kepegawaian.edit', compact('riwayatKepegawaian', 'jenisJabatans', 'units', 'pegawais'));
+        return view('riwayat_kepegawaian.edit', compact('riwayatKepegawaians', 'jenisJabatans', 'units', 'pegawais'));
     }
 
     /**
@@ -232,6 +226,7 @@ class RiwayatKepegawaianController extends Controller
         $riwayatKepegawaian = RiwayatKepegawaian::findOrFail($id);
 
         if ($user->id_role !== 1 && $riwayatKepegawaian->id_pegawai !== $user->id_pegawai) {
+            \Log::warning("Akses update ditolak untuk user ID: {$user->id}, role: {$user->id_role}");
             return redirect()->route('riwayat_kepegawaian.index')
                 ->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
         }
@@ -295,10 +290,6 @@ class RiwayatKepegawaianController extends Controller
                 'id_unit' => $request->id_unit,
             ];
 
-            if ($user->id_role == 1 && $request->has('id_pegawai')) {
-                $kepegawaianData['id_pegawai'] = $request->id_pegawai;
-            }
-
             if ($request->hasFile('dokumen_jabatan')) {
                 if ($riwayatJabatan->dokumen_jabatan && file_exists(public_path($riwayatJabatan->dokumen_jabatan))) {
                     unlink(public_path($riwayatJabatan->dokumen_jabatan));
@@ -336,7 +327,7 @@ class RiwayatKepegawaianController extends Controller
             return redirect()->route('riwayat_kepegawaian.index')
                 ->with('success', 'Data riwayat kepegawaian berhasil diperbarui!');
         } catch (\Exception $e) {
-            return redirect()->route('riwayat_kepegawaian.index')
+            return redirect()->route('riwayat_kepegawaian.edit')
                 ->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())
                 ->withInput();
         }

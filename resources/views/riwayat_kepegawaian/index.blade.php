@@ -61,13 +61,13 @@
                                         <table id="datatablesSimple" class="table table-bordered table-striped p-4 mt-4">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center" style="width: 10%;">No.</th>
+                                                    <th class="text-center" style="width: 5%;">No.</th>
                                                     @if (auth()->user()->id_role == 1)
-                                                        <th class="text-center" style="width: 20%;">Nama Pegawai</th>
+                                                        <th class="text-center" style="width: 15%;">Nama Pegawai</th>
                                                     @endif
-                                                    <th class="text-center" style="width: 20%;">Nama Jabatan</th>
-                                                    <th class="text-center" style="width: 20%;">Pangkat Golongan</th>
-                                                    <th class="text-center" style="width: 25%;">Unit</th>
+                                                    <th class="text-center" style="width: 15%;">Nama Jabatan</th>
+                                                    <th class="text-center" style="width: 15%;">Pangkat Golongan</th>
+                                                    <th class="text-center" style="width: 35%;">Unit</th>
                                                     <th class="text-center" style="width: 15%;">Action</th>
                                                 </tr>
                                             </thead>
@@ -92,11 +92,11 @@
                                                         <td class="text-center">
                                                             <a href="{{ route('riwayat_kepegawaian.show', $riwayatKepegawaian->riwayat_kepegawaian_id) }}"
                                                                 class="btn btn-sm btn-primary">
-                                                                <i class="fas fa-show"></i> Detail
+                                                                <i class="bi bi-eye"></i>
                                                             </a>
                                                             <a href="{{ route('riwayat_kepegawaian.edit', $riwayatKepegawaian->riwayat_kepegawaian_id) }}"
                                                                 class="btn btn-sm btn-warning">
-                                                                <i class="fas fa-edit"></i> Edit
+                                                                <i class="bi bi-pencil-square"></i>
                                                             </a>
                                                             <form
                                                                 action="{{ route('riwayat_kepegawaian.destroy', $riwayatKepegawaian->riwayat_kepegawaian_id) }}"
@@ -105,7 +105,7 @@
                                                                 @method('DELETE')
                                                                 <button type="submit" class="btn btn-sm btn-danger"
                                                                     onclick="return confirm('Yakin ingin menghapus?')">
-                                                                    <i class="fas fa-trash"></i> Hapus
+                                                                    <i class="bi bi-trash"></i>
                                                                 </button>
                                                             </form>
                                                         </td>

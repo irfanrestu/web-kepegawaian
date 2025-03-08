@@ -42,19 +42,25 @@
                                             <thead>
                                                 <tr>
                                                     <th class="text-center" style="width: 5%;">No.</th>
-                                                    <th class="text-center" style="width: 5%;">Jenjang Pendidikan</th>
+                                                    @if(auth()->user()->id_role == 1)
+                                                        <th class="text-center" style="width: 15%;">Nama Pegawai</th>
+                                                    @endif
+                                                    <th class="text-center" style="width: 15%;">Jenjang Pendidikan</th>
                                                     <th class="text-center" style="width: 20%;">Jurusan</th>
                                                     <th class="text-center" style="width: 25%;">Nama Sekolah</th>
-                                                    <th class="text-center" style="width: 10%;">File Ijazah</th>
-                                                    <th class="text-center" style="width: 10%;">File Nilai Transkrip</th>
+                                                    <th class="text-center" style="width: 5%;">Ijazah</th>
+                                                    <th class="text-center" style="width: 5%;">Transkrip</th>
                                                     <th class="text-center" style="width: 10%;">Tahun Lulus</th>
-                                                    <th class="text-center" style="width: 15%;">Action</th>
+                                                    <th class="text-center" style="width: 20%;">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @forelse ($riwayatPendidikan as $index => $pendidikan)
                                                     <tr>
                                                         <td class="text-center">{{ $index + 1 }}</td>
+                                                        @if(auth()->user()->id_role == 1)
+                                                            <td class="text-center">{{ $pendidikan->pegawai->nama_lengkap }}</td>
+                                                        @endif
                                                         <td class="text-center">
                                                             {{ $pendidikan->jenjangPendidikan->jenjang_pendidikan }}
                                                         </td>
@@ -64,9 +70,7 @@
                                                             <a href="{{ asset($pendidikan->file_ijazah) }}" target="_blank"
                                                                 class="btn btn-sm btn-outline-primary">
                                                                 @if (Str::endsWith($pendidikan->file_ijazah, '.pdf'))
-                                                                    <i class="fas fa-file-pdf"></i> PDF
-                                                                @else
-                                                                    <i class="fas fa-file"></i> File
+                                                                    <i class="bi bi-file-earmark"></i>
                                                                 @endif
                                                             </a>
                                                         </td>
@@ -74,20 +78,19 @@
                                                             <a href="{{ asset($pendidikan->file_transkrip) }}" target="_blank"
                                                                 class="btn btn-sm btn-outline-primary">
                                                                 @if (Str::endsWith($pendidikan->file_transkrip, '.pdf'))
-                                                                    <i class="fas fa-file-pdf"></i> PDF
-                                                                @else
-                                                                    <i class="fas fa-file"></i> File
+                                                                    <i class="bi bi-file-earmark"></i>
                                                                 @endif
                                                             </a>
                                                         </td>
                                                         <td class="text-center">{{ $pendidikan->tahun_lulus }}</td>
                                                         <td class="text-center">
                                                             <a href="{{ route('riwayat_pendidikan.edit', $pendidikan->riwayat_pendidikan_id) }}"
-                                                                class="btn btn-sm btn-warning">Edit</a>
+                                                                class="btn btn-sm btn-warning"><i
+                                                                    class="bi bi-pencil-square"></i></a>
                                                             <button type="button" class="btn btn-danger btn-sm"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#deleteModal{{ $pendidikan->riwayat_pendidikan_id }}">
-                                                                Hapus
+                                                                <i class="bi bi-trash"></i>
                                                             </button>
 
                                                             <!-- Modal Delete -->
@@ -134,17 +137,20 @@
                                                     </tr>
                                                 @empty
                                                     <tr>
-                                                        <td colspan="8" class="text-center">Belum ada data yang tersedia.</td>
+                                                        <td colspan="{{ auth()->user()->id_role == 1 ? 9 : 8 }}"
+                                                            class="text-center">Belum ada data yang tersedia.</td>
                                                     </tr>
                                                 @endforelse
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="row m-3">
-                                        <div class="card p-2">
-                                            @include('riwayat_pendidikan.create')
+                                    @if (auth()->user()->id_role != 1)
+                                        <div class="row m-3">
+                                            <div class="card p-2">
+                                                @include('riwayat_pendidikan.create')
+                                            </div>
                                         </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

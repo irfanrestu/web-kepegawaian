@@ -60,6 +60,7 @@
                     <label>Tahun Lulus</label>
                     <input autocomplete="off" type="number" name="tahun_lulus"
                         class="form-control @error('tahun_lulus') is-invalid @enderror" value="{{ old('tahun_lulus') }}"
+                        placeholder="Contoh: 2020"
                         oninput="this.value=this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
                         min="1900" max="{{ date('Y') }}" required>
                     @error('tahun_lulus')

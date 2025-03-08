@@ -17,14 +17,21 @@ class RiwayatPendidikanController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
         $jenjangPendidikans = JenjangPendidikan::all();
         $jurusans = Jurusan::all();
-        $riwayatPendidikan = RiwayatPendidikan::where('id_pegawai', auth()->user()->id_pegawai)
-            ->with('jenjangPendidikan')
-            ->with('jurusan')
-            ->get();
 
-        return view('riwayat_pendidikan.index', compact('riwayatPendidikan', 'jenjangPendidikans', 'jurusans'));
+        if ($user->id_role == 1) { // Admin
+            $riwayatPendidikan = RiwayatPendidikan::with('jenjangPendidikan', 'jurusan', 'pegawai')->get();
+            $pegawais = Pegawai::all(); // Data pegawai untuk admin
+        } else { // Role lain (pegawai)
+            $riwayatPendidikan = RiwayatPendidikan::where('id_pegawai', $user->id_pegawai)
+                ->with('jenjangPendidikan', 'jurusan')
+                ->get();
+            $pegawais = null; // Tidak perlu data pegawai untuk role lain
+        }
+
+        return view('riwayat_pendidikan.index', compact('riwayatPendidikan', 'jenjangPendidikans', 'jurusans', 'pegawais'));
     }
 
     /**
@@ -95,9 +102,14 @@ class RiwayatPendidikanController extends Controller
     public function edit(Request $request, $id)
     {
         $riwayatPendidikan = RiwayatPendidikan::findOrFail($id);
+        $user = auth()->user();
 
         if ($riwayatPendidikan->id_pegawai !== auth()->user()->id_pegawai) {
             return redirect()->route('riwayat_pendidikan.index')->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
+        }
+        if ($user->id_role !== 1 && $riwayatPendidikan->id_pegawai !== $user->id_pegawai) {
+            return redirect()->route('riwayat_pendidikan.index')
+                ->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
         }
 
         $jenjangPendidikans = JenjangPendidikan::all();

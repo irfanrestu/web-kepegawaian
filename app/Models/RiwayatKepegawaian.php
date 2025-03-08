@@ -20,6 +20,11 @@ class RiwayatKepegawaian extends Model
         'id_unit',
     ];
 
+    public function getRouteKeyName()
+    {
+        return 'riwayat_kepegwaian_id';
+    }
+
     public function pegawai()
     {
         return $this->belongsTo(Pegawai::class, 'id_pegawai', 'pegawai_id');
