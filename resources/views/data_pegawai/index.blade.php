@@ -58,7 +58,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
 
-                                        <a href="{{ route('riwayat_jabatan.create') }}"
+                                        <a href=""
                                             class="btn btn-sm btn-primary">Tambah Data
                                         </a>
 

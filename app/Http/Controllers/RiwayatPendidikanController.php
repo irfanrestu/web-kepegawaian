@@ -85,7 +85,7 @@ class RiwayatPendidikanController extends Controller
             'tahun_lulus' => $request->tahun_lulus,
         ]);
 
-        return redirect()->route('riwayat_pendidikan.index')->with('success', 'Data berhasil diunggah!');
+        return back()->with('success', 'Data berhasil diunggah!');
     }
 
     /**
@@ -216,12 +216,10 @@ class RiwayatPendidikanController extends Controller
 
             $riwayatPendidikan->delete();
 
-            return redirect()->route('riwayat_pendidikan.index')
-                ->with('success', 'Data riwayat pendidikan berhasil dihapus!');
+            return back()->with('success', 'Data riwayat pendidikan berhasil dihapus!');
 
         } catch (\Exception $e) {
-            return redirect()->route('riwayat_pendidikan.index')
-                ->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan saat menghapus data: ' . $e->getMessage());
         }
     }
 }

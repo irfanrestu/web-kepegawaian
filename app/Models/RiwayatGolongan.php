@@ -27,4 +27,9 @@ class RiwayatGolongan extends Model
     {
         return $this->hasMany(RiwayatKepegawaian::class, 'id_riwayat_golongan', 'riwayat_golongan_id');
     }
+
+    public function pegawai()
+    {
+        return $this->belongsTo(Pegawai::class, 'id_pegawai', 'id_pegawai');
+    }
 }

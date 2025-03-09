@@ -145,11 +145,9 @@ class DokumenController extends Controller
                 ]
             );
 
-            return redirect()->route('dokumen_pendukung.index')
-                ->with('success', 'File berhasil diupload!');
+            return back()->with('success', 'File berhasil diupload!');
         } catch (\Exception $e) {
-            return redirect()->route('dokumen_pendukung.index')
-                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
