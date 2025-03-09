@@ -1,47 +1,32 @@
 <div class="tab-pane fade pt-3" id="dokumen-pendukung" role="tabpanel">
-<h5 class="card-title">Upload Dokumen</h5>
+    <h5 class="card-title">Dokumen Pendukung - {{ $pegawai->nama_lengkap }}</h5>
 
+    @error('file')
+        <span class="text-danger">{{ $message }}</span>
+    @enderror
 
-@error('file')
-    <span class="text-danger">{{ $message }}</span>
-@enderror
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Kategori Dokumen</th>
-            <th>File</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($kategoriDokumens as $kategori)
-            <tr>
-                <td>{{ $kategori->kategori_dokumen }}</td>
-                <td>
-                    @if (isset($uploadedDokumens[$kategori->kategori_dokumen_id]))
-                        <a href="{{ asset($uploadedDokumens[$kategori->kategori_dokumen_id]) }}"
-                            target="_blank">
-                            {{ basename($uploadedDokumens[$kategori->kategori_dokumen_id]) }}
-                        </a>
-                    @else
-                        <span class="text-muted">Belum ada file</span>
-                    @endif
-                </td>
-                <td>
-                    <form
-                        action="{{ route('dokumen_pendukung.update', ['id' => $kategori->kategori_dokumen_id]) }}"
-                        method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="input-group">
-                            <input type="file" name="file" class="form-control" required>
-                            <button type="submit" class="btn btn-primary">Upload</button>
+    <div class="row">
+        <div class="col-lg-12">
+            @foreach ($kategoriDokumens as $kategori)
+                        <div class="mb-3">
+                            <label class="fw-bold">{{ $kategori->kategori_dokumen }}</label>
+                            <div>
+                                @php
+                                    $dokumen = $pegawai->dokumens
+                                        ->where('id_kategori_dokumen', $kategori->kategori_dokumen_id)
+                                        ->first();
+                                @endphp
+                                @if ($dokumen)
+                                    <a href="{{ asset($dokumen->file_dokumen) }}" target="_blank"
+                                        class="btn btn-sm btn-outline-primary d-flex justify-content-center align-items-center">
+                                        <i class="bi bi-file-earmark"></i> Lihat File
+                                    </a>
+                                @else
+                                    <span class="text-muted">-</span>
+                                @endif
+                            </div>
                         </div>
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
-</table>
+            @endforeach
+        </div>
+    </div>
 </div>

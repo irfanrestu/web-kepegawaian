@@ -22,57 +22,66 @@ class DataPegawaiController extends Controller
 {
     public function index(Request $request)
     {
+        $query = Pegawai::with(['user.role', 'statuspegawai'])
+            ->whereHas('user', function ($query) {
+                $query->where('id_role', '!=', 1);
+            });
+
         if ($request->has('cari')) {
-            $pegawai = Pegawai::where('nama', 'LIKE', '%' . $request->cari . '%')->get();
-        } else {
-            $pegawai = Pegawai::all();
+            $query->where('nama_lengkap', 'LIKE', '%' . $request->cari . '%');
         }
+
+        $pegawai = $query->get();
 
         return view('data_pegawai.index', compact('pegawai'));
     }
 
-    public function pengaturan(Pegawai $pegawai) 
+    public function pengaturan(Pegawai $pegawai)
     {
+        $pegawai->load([
+            'user.role',
+            'statuspegawai',
+            'dokumens.kategoriDokumen',
+            'riwayatKepegawaian.riwayatJabatan.jenisJabatan',
+            'riwayatKepegawaian.riwayatGolongan',
+            'riwayatKepegawaian.unit',
+            'riwayatPendidikan.jenjangPendidikan',
+            'riwayatPendidikan.jurusan'
+        ]);
+
+        // Fetch master data for forms
         $rolelist = Role::all();
         $userlist = User::all();
         $liststatuspegawai = StatusPegawais::all();
         $listagama = Agama::all();
-
-        //Riwayat Kepegawaian
-         // Cek apakah user adalah Admin
-        
-            // Pegawai hanya bisa melihat data miliknya sendiri
-            $riwayatKepegawaians = RiwayatKepegawaian::whereHas('riwayatJabatan', function ($query) use ($pegawai) {
-                $query->where('id_pegawai', $pegawai->pegawai_id);
-            })
-            ->with(['riwayatJabatan', 'riwayatGolongan', 'unit'])
-            ->get();
-            $showForm = true;
-            $pegawais = null;
-        
-
-        $riwayatJabatans = RiwayatJabatan::all();
-        $riwayatGolongans = RiwayatGolongan::all();
-        $units = Unit::all();
         $jenisJabatans = JenisJabatan::all();
-        $riwayatJabatans = RiwayatJabatan::with('jenisJabatan')->get();
-
-        //Riwayat Pendidikan
+        $units = Unit::all();
         $jenjangPendidikans = JenjangPendidikan::all();
         $jurusans = Jurusan::all();
-
-            $riwayatPendidikan = RiwayatPendidikan::where('id_pegawai', $pegawai->pegawai_id)
-                ->with('jenjangPendidikan', 'jurusan')
-                ->get();
-            $pegawais = null; // Tidak perlu data pegawai untuk role lain
-
-        //Dokumen
         $kategoriDokumens = KategoriDokumen::all();
 
-            // Ambil dokumen yang diunggah oleh pegawai yang login
-            $uploadedDokumens = $pegawai->dokumens()
-                ->pluck('file_dokumen', 'id_kategori_dokumen') // Gunakan 'file_dokumen', bukan 'file'
-                ->toArray();
-        return view('data_pegawai.pengaturan.index', compact('pegawai', 'rolelist','userlist','liststatuspegawai','listagama','liststatuspegawai','listagama','rolelist','riwayatKepegawaians', 'riwayatJabatans', 'jenisJabatans', 'riwayatGolongans', 'units','showForm', 'riwayatPendidikan', 'jenjangPendidikans', 'jurusans', 'pegawais','kategoriDokumens', 'uploadedDokumens'));
+        // Fetch specific history data for the selected employee
+        $riwayatKepegawaians = RiwayatKepegawaian::where('id_pegawai', $pegawai->pegawai_id)
+            ->with(['riwayatJabatan', 'riwayatGolongan', 'unit'])
+            ->get();
+
+        $riwayatPendidikan = RiwayatPendidikan::with(['jenjangPendidikan', 'jurusan'])
+            ->where('id_pegawai', $pegawai->pegawai_id)
+            ->get();
+
+        return view('data_pegawai.pengaturan.index', compact(
+            'pegawai',
+            'rolelist',
+            'userlist',
+            'liststatuspegawai',
+            'listagama',
+            'jenisJabatans',
+            'units',
+            'jenjangPendidikans',
+            'jurusans',
+            'kategoriDokumens',
+            'riwayatKepegawaians',
+            'riwayatPendidikan'
+        ));
     }
 }

@@ -22,7 +22,7 @@ class RiwayatKepegawaian extends Model
 
     public function getRouteKeyName()
     {
-        return 'riwayat_kepegwaian_id';
+        return 'riwayat_kepegawaian_id';
     }
 
     public function pegawai()

@@ -79,4 +79,9 @@ class Pegawai extends Model
     {
         return $this->hasMany(RiwayatKepegawaian::class, 'id_pegawai', 'pegawai_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'pegawai_id';
+    }
 }
