@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DataPegawaiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RiwayatKepegawaianController;
@@ -31,8 +32,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     // Akhir bagian halaman Dashboard
 
-    // Rute Data Biodata pegawai Tab
-    Route::get('/data_pegawai', [PegawaiController::class, 'index1'])->name('data_pegawai.index');
+    // Rute Data Pegawai Admin
+    Route::get('/data_pegawai', [DataPegawaiController::class, 'index'])->name('data_pegawai.index');
+    Route::get('/data_pegawai/pegaturan{pegawai}', [DataPegawaiController::class, 'pengaturan'])->name('data_pegawai.pegaturan');
+
+    
 
     // Rute Data Biodata pegawai
     Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');

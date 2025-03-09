@@ -1,46 +1,12 @@
 @extends('layouts.main')
 @section('content')
-<main id="main" class="main">
+    <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Data Pegawai</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-    
-            <div class="card-body">
-              
-              <!-- Default Tabs -->
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="biodata-tab" data-bs-toggle="tab" data-bs-target="#biodata" type="button" role="tab" aria-controls="biodata" aria-selected="true">Biodata</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="riwayatpendidikan-tab" data-bs-toggle="tab" data-bs-target="#riwayatpendidikan" type="button" role="tab" aria-controls="riwayatpendidikan" aria-selected="false" tabindex="-1">Riwayat Pendidikan</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">Contact</button>
-                </li>
-              </ul>
-              <div class="tab-content pt-2" id="myTabContent">
-                <div class="tab-pane fade show active" id="biodata" role="tabpanel" aria-labelledby="biodata-tab">
-                
-                @include('data_pegawai.biodata.index')
-                
-                </div>
-                <div class="tab-pane fade" id="riwayatpendidikan" role="tabpanel" aria-labelledby="riwayatpendidikan-tab">
-                <div class="pagetitle">
-            <h1>Data Tables</h1>
+        <div class="pagetitle">
+            <h1>Biodata</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                     <li class="breadcrumb-item">Tables</li>
                     <li class="breadcrumb-item active">Data</li>
                 </ol>
@@ -50,58 +16,115 @@
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
-
                     <div class="card">
-                        <div class="container-fluid px-4">
-                            
-                            <div class="row">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-
-                                        <a href=""
-                                            class="btn btn-sm btn-primary">Tambah Data
-                                        </a>
-
-                                        <i class="fas fa-table me-1"></i>
-                                        DataTable Example
-                                    </div>
-                                    <div class="card-body m-2">
-                                        <table id="datatablesSimple">
-                                            <thead>
-                                                <tr>
-                                                    <th>NO</th>
-                                                    <th>Nama</th>
-                                                    <th>Jenis Kelamin</th>
-                                                    <th>Tempat Lahir</th>
-                                                    <th>Tanggak Lahir</th>
-                                                    <th>Email</th>
-                                                    <th>No Telepon</th>
-                                                    <th>Alamat</th>
-                                                    <th width="280px">Action</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Table Biodata Pegawai</h5>
+                                @if(session('success'))
+                                <div class="alert alert-success">
+                                {{ session('success') }}
                                 </div>
+                                @endif
+
+                                @if($errors->any())
+                                <div class="alert alert-danger">
+                                <ul>
+                                @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+                                <a href="{{ route('biodata.create') }}" class="btn btn-sm btn-primary">Tambah data</a>
+                                <!-- Table with hoverable rows -->
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" width="100px">Foto</th>
+                                            <th scope="col">Nama Lengkap</th>
+                                            <th scope="col">NIP</th>
+                                            <th scope="col">NIK</th>
+                                            <th scope="col">Status Pegawai</th>
+                                            <th scope="col">Alamat</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">No Telepon</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pegawai as $p)
+                                            <tr>
+                                                <th scope="row">                    
+                                                @empty($p->file_foto)
+                                                <img src="{{url('image/nophoto.jpg')}}"
+                                                    alt="project-image" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
+                                                @else
+                                                <img src="{{ asset('storage/' . $p->file_foto) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 100px; height: auto;">
+                                                @endempty
+                                                </th>
+                                                <td>{{ $p->nama_lengkap }}</td>
+                                                <td> {{ $p->nip }} </td>
+                                                <td> {{ $p->no_nik }} </td>
+                                                <td> {{ $p->statuspegawai->status_pegawai }} </td>
+                                                <td> {{ $p->alamat_lengkap }} </td>
+                                                <td> {{ $p->email }} </td>
+                                                <td> {{ $p->no_hp }} </td>
+                                                <td>
+                                                    <a href="{{ route('data_pegawai.pegaturan', $p->pegawai_id) }}"
+                                                        class="btn btn-sm btn-info">Pengaturan</a>
+                                                   <!-- <a href="{{ route('biodata.edit', $p->pegawai_id, ) }}"
+                                                        class="btn btn-sm btn-success">edit</a> -->
+                                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#exampleModal{{$p->pegawai_id}}">
+                                                        Hapus
+                                                    </button>
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="exampleModal{{$p->pegawai_id}}" tabindex="-1"
+                                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Hapus
+                                                                        Pegawai</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Apakah anda yakin akan menghapus data {{$p->nama_lengkap}}
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+
+                                                                    <form
+                                                                        action="{{ route('biodata.destroy', $p->pegawai_id) }}"
+                                                                        method="POST" style="display:inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-danger">Delete</button>
+                                                                    </form>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <!-- End Table with hoverable rows -->
+
+
+
                             </div>
                         </div>
                     </div>
                 </div>
         </section>
-                </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                  Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
-                </div>
-              </div>
-              <!-- End Default Tabs -->
-
-            </div>
-          </div>
-      
-    </section>
-</main>
-  @endsection
+    </main>
+@endsection
