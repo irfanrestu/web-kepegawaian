@@ -78,36 +78,28 @@ public function update(Request $request, $post_id)
         'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    // Handle file upload (if a new thumbnail is provided)
+    // Handle thumbnail update
     if ($request->hasFile('thumbnail')) {
-        // Delete the old thumbnail (if it exists)
-        if ($post->thumbnail) {
+        // Delete the old thumbnail if it exists
+        if ($post->thumbnail && Storage::exists($post->thumbnail)) {
             Storage::delete($post->thumbnail);
         }
-
-        // Store the new thumbnail
-        $validatedData['thumbnail'] = $request->file('thumbnail')->store('thumbnails');
-        \Log::info('New thumbnail path:', ['thumbnail' => $validatedData['thumbnail']]);
-    }
-
-    // Handle photo removal
-    if ($request->remove_photo == '1') {
-        if ($post->thumbnail) {
+        // Store the new thumbnail in the 'public/thumbnails' directory
+        $path = $request->file('thumbnail')->store('thumbnails', 'public');
+        $post->thumbnail = $path; // Save the correct path to the database
+    } elseif ($request->input('remove_photo') == '1') {
+        // Remove the thumbnail if the remove_photo flag is set
+        if ($post->thumbnail && Storage::exists($post->thumbnail)) {
             Storage::delete($post->thumbnail);
         }
-        $validatedData['thumbnail'] = null; // Explicitly set thumbnail to null
+        $post->thumbnail = null; // Set thumbnail to null in the database
     }
-
-    // Debugging: Check the final thumbnail value
-    \Log::info('Final thumbnail value:', ['thumbnail' => $validatedData['thumbnail'] ?? $post->thumbnail]);
 
     // Update the post
-    $post->update([
-        'judul' => $validatedData['judul'],
-        'content' => $validatedData['content'],
-        'thumbnail' => $validatedData['thumbnail'] ?? $post->thumbnail, // Use the new thumbnail or keep the old one
-        'id_user' => auth()->user()->id,
-    ]);
+    $post->judul = $validatedData['judul'];
+    $post->content = $validatedData['content'];
+    $post->id_user = auth()->user()->id;
+    $post->save();
 
     return redirect()->route('post.index')->with('success', 'Post updated successfully.');
 }

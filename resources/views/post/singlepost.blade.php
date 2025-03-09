@@ -9,7 +9,7 @@
                 <div class="row">
 	<div class="col-lg-12 mb-5">
 		<div class="single-blog-item">
-			<img src="images/blog/2.jpg" alt="" class="img-fluid rounded">
+			
 			
 			<div class="blog-item-content bg-white p-5">
     @empty($post->thumbnail)
@@ -18,7 +18,7 @@
             <img src="{{url('image/nophoto.jpg')}}"
                  alt="project-image" 
                  class="img-fluid rounded" 
-                 style="width: 100%; max-width: 600px; height: auto;">
+                 style="width: 100%; max-width: 600px; height: 350px;">
         </div>
     @else
         <!-- Centered Thumbnail Image -->
@@ -26,7 +26,7 @@
             <img src="{{ asset('storage/' . $post->thumbnail) }}" 
                  alt="Foto thumbnail" 
                  class="rounded" 
-                 style="width: 100%; max-width: 600px; height: auto;">
+                 style="width: 100%; max-width: 650px; height: 350px;">
         </div>
     @endempty
 

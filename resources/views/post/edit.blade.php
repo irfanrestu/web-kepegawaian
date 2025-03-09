@@ -70,7 +70,7 @@
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
-                </form>  
+                </form>
             </div>
         </div>
     </div>
@@ -86,7 +86,8 @@
         .catch(error => {
             console.error(error);
         });
-
+</script>
+<script>
     function previewImage(event) {
         const reader = new FileReader();
         const imageElement = document.querySelector('img.roundedthumb');

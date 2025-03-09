@@ -44,7 +44,7 @@
                                         </th>
                                         <td>{{ $po->user->name}}</td>
                                         <td>{{ $po->judul }}  </td>
-                                        <td>{{ $po->created_at}}  </td>
+                                        <td>{{ $po->created_at->format('d M Y')}}  </td>
                                         <td>
                                             <a href="{{Route('post.singlepost', $po->slug)}}"
                                                 class="btn btn-sm btn-info">View</a>
