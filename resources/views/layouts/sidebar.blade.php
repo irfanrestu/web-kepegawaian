@@ -18,7 +18,7 @@
         </li>
         <!-- Informasi -->
 
-        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
+        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin'))
         <li class="nav-item">
             <a class="nav-link" href="{{ route('data_pegawai.index') }}">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span>
@@ -26,7 +26,7 @@
         </li>
         <!-- End Data Pegawai Nav Admin -->
 
-        <!--
+        
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#"
                 aria-expanded="false">
@@ -56,7 +56,6 @@
                 </li>
             </ul>
         </li>
-        -->
         <!-- End Data Pegawai Nav Pegawai -->
         @endif
 
