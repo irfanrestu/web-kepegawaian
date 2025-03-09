@@ -59,9 +59,9 @@
         <!-- End Data Pegawai Nav Pegawai -->
 
         <li class="nav-item">
-            <a class="nav-link " href="{{ route('dashboard.index') }}">
+            <a class="nav-link " href="{{ route('profile.index') }}">
                 <i class="bi bi-person"></i>
-                <span>Profil</span>
+                <span>Profile Pribadi</span>
             </a>
         </li>
         <!-- End Profil Nav -->

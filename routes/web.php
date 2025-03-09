@@ -13,6 +13,7 @@ use App\Http\Controllers\RiwayatKepegawaianController;
 use App\Http\Controllers\RiwayatPendidikanController;
 use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('homepage.index');
@@ -51,7 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     //Akhir bagian halaman Biodata Pegawai
-
     Route::get('/riwayat_kepegawaian', [RiwayatKepegawaianController::class, 'index'])->name('riwayat_kepegawaian.index');
     Route::get('/riwayat_kepegawaian/create', [RiwayatKepegawaianController::class, 'create'])->name('riwayat_kepegawaian.create');
     Route::post('/riwayat_kepegawaian/store', [RiwayatKepegawaianController::class, 'store'])->name('riwayat_kepegawaian.store');
@@ -60,6 +60,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/riwayat_kepegawaian/update{id}', [RiwayatKepegawaianController::class, 'update'])->name('riwayat_kepegawaian.update');
     Route::delete('/riwayat_kepegawaian/delete{id}', [RiwayatKepegawaianController::class, 'destroy'])->name('riwayat_kepegawaian.destroy');
     //Akhir bagian halaman Riwayat Kepegawaian
+
+    Route::get('/profile_pribadi', [ProfileController::class, 'index'])->name('profile.index');
+    //Akhir bagian halaman profile pribadi
 
     Route::get('/riwayat_pendidikan', [RiwayatPendidikanController::class, 'index'])->name('riwayat_pendidikan.index');
     Route::get('/riwayat_pendidikan/create', [RiwayatPendidikanController::class, 'create'])->name('riwayat_pendidikan.create');
