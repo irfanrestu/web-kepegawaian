@@ -31,12 +31,7 @@ class ProfileController extends Controller
 
         //Riwayat Kepegawaian
          // Cek apakah user adalah Admin
-         if ($user->id_role == 1) { // Ganti 'role' dengan nama kolom peran Anda
-            // Admin bisa melihat semua data riwayat kepegawaian
-            $riwayatKepegawaians = RiwayatKepegawaian::with('riwayatJabatan', 'riwayatGolongan', 'unit')->get();
-            $pegawais = Pegawai::all();
-            $showForm = false;
-        } else {
+        
             // Pegawai hanya bisa melihat data miliknya sendiri
             $riwayatKepegawaians = RiwayatKepegawaian::whereHas('riwayatJabatan', function ($query) use ($user) {
                 $query->where('id_pegawai', $user->id_pegawai);
@@ -45,7 +40,7 @@ class ProfileController extends Controller
             ->get();
             $showForm = true;
             $pegawais = null;
-        }
+        
 
         $riwayatJabatans = RiwayatJabatan::all();
         $riwayatGolongans = RiwayatGolongan::all();
@@ -57,38 +52,19 @@ class ProfileController extends Controller
         $jenjangPendidikans = JenjangPendidikan::all();
         $jurusans = Jurusan::all();
 
-        if ($user->id_role == 1) { // Admin
-            $riwayatPendidikan = RiwayatPendidikan::with('jenjangPendidikan', 'jurusan', 'pegawai')->get();
-            $pegawais = Pegawai::all(); // Data pegawai untuk admin
-        } else { // Role lain (pegawai)
             $riwayatPendidikan = RiwayatPendidikan::where('id_pegawai', $user->id_pegawai)
                 ->with('jenjangPendidikan', 'jurusan')
                 ->get();
             $pegawais = null; // Tidak perlu data pegawai untuk role lain
-        }
 
         //Dokumen
         $kategoriDokumens = KategoriDokumen::all();
 
-        if ($user->id_role == 1) { // Admin
-            // Ambil semua pegawai beserta dokumen yang sudah diunggah
-            $pegawais = Pegawai::whereDoesntHave('user', function ($query) {
-                $query->where('id_role', 1); // Exclude admin
-            })
-                ->with([
-                    'dokumens' => function ($query) {
-                        $query->with('kategoriDokumen');
-                    }
-                ])
-                ->get();
-
-            return view('dokumen_pendukung.admin', compact('kategoriDokumens', 'pegawais'));
-        } else { // Pegawai
             // Ambil dokumen yang diunggah oleh pegawai yang login
             $uploadedDokumens = $user->pegawai->dokumens()
                 ->pluck('file_dokumen', 'id_kategori_dokumen') // Gunakan 'file_dokumen', bukan 'file'
                 ->toArray();
-        }
+        
         return view('profile_pribadi.index', compact('user','liststatuspegawai','listagama','rolelist','riwayatKepegawaians', 'riwayatJabatans', 'jenisJabatans', 'riwayatGolongans', 'units','showForm', 'riwayatPendidikan', 'jenjangPendidikans', 'jurusans', 'pegawais','kategoriDokumens', 'uploadedDokumens'));
     }
 }

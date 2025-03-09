@@ -11,17 +11,16 @@
         </li>
         <!-- End Dashboard Nav -->
 
-        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
         <li class="nav-item">
             <a class="nav-link" href="{{ route('informasi.index') }}">
                 <i class="bi bi-journal-text"></i><span>Informasi</span>
             </a>
         </li>
-        @endif
         <!-- Informasi -->
 
+        @if(auth()->check() && (auth()->user()->role->nama_role === 'Admin' || auth()->user()->role->nama_role === 'Pegawai Konten'))
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('data_pegawai.index') }}">
+            <a class="nav-link" href="{{ route('biodata.index') }}">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span>
             </a>
         </li>
@@ -57,6 +56,7 @@
             </ul>
         </li>
         <!-- End Data Pegawai Nav Pegawai -->
+        @endif
 
         <li class="nav-item">
             <a class="nav-link " href="{{ route('profile.index') }}">

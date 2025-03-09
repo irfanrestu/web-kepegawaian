@@ -110,13 +110,13 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    @if (auth()->user()->id_role != 1)
+                                    
                                         <div class="row m-3">
                                             <div class="card p-2">
                                                 @include('riwayat_pendidikan.create')
                                             </div>
                                         </div>
-                                    @endif
+                                
                                 </div>
                             </div>
 </div>

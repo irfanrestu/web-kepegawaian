@@ -92,7 +92,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/post/edit/{post_id}', [PostController::class, 'edit'])->name('post.edit');
         Route::put('/post/{post_id}', [PostController::class, 'update'])->name('post.update');
         Route::delete('/post/delete{post_id}', [PostController::class, 'destroy'])->name('post.destroy');
-        Route::get('/{slug}', [PostController::class, 'singlepost'])->name('post.singlepost');
 
     });
+
+    Route::get('/{slug}', [PostController::class, 'singlepost'])->name('post.singlepost');
+
 });
