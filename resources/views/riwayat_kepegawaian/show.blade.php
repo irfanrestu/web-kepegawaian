@@ -158,7 +158,7 @@
                             <!-- Tombol Kembali -->
                             <div class="row mt-4">
                                 <div class="col-sm-12 text-center">
-                                    <a href="{{ route('riwayat_kepegawaian.index') }}" class="btn btn-secondary">Kembali</a>
+                                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>
                                 </div>
                             </div>
                         </div>

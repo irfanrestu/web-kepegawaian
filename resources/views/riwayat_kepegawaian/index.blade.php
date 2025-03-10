@@ -20,38 +20,6 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="container-fluid px-4">
-                            <!-- Form Tambah Data -->
-                            @if($showForm)
-                                <div class="card mt-4">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title mb-0">Tambah Riwayat Kepegawaian</h5>
-                                        <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#formInput" aria-expanded="true" aria-controls="formInput">
-                                            <i class="fas fa-minus"></i> Minimize
-                                        </button>
-                                    </div>
-                                    <div id="formInput" class="collapse show">
-                                        <div class="card-body">
-                                            @if (session('success'))
-                                                <div class="alert alert-success">{{ session('success') }}</div>
-                                            @endif
-                                            @if (session('error'))
-                                                <div class="alert alert-danger">{{ session('error') }}</div>
-                                            @endif
-                                            @if ($errors->any())
-                                                <div class="alert alert-danger">
-                                                    <ul>
-                                                        @foreach ($errors->all() as $error)
-                                                            <li>{{ $error }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                            @include('riwayat_kepegawaian.create')
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
 
                             <!-- Tabel Riwayat Kepegawaian -->
                             <h5 class="card-title mt-4">Tabel Riwayat Kepegawaian</h5>
@@ -122,6 +90,38 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Form Tambah Data -->
+                        @if($showForm)
+                            <div class="card mt-4">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title mb-0">Tambah Riwayat Kepegawaian</h5>
+                                    <button class="btn btn-sm btn-primary" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#formInput" aria-expanded="true" aria-controls="formInput">
+                                        <i class="fas fa-minus"></i> Minimize
+                                    </button>
+                                </div>
+                                <div id="formInput" class="collapse show">
+                                    <div class="card-body">
+                                        @if (session('success'))
+                                            <div class="alert alert-success">{{ session('success') }}</div>
+                                        @endif
+                                        @if (session('error'))
+                                            <div class="alert alert-danger">{{ session('error') }}</div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        @include('riwayat_kepegawaian.create')
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
