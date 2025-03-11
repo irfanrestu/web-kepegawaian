@@ -69,14 +69,18 @@
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="email" class="form-control" id="email" required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required autofocus>
+                         
                         <div class="invalid-feedback">Please enter your email.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" class="form-control" id="password" name="password" required>
+                        @error('password')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
@@ -91,6 +95,17 @@
                     </div>
                     
                   </form>
+
+                  <!-- Display general authentication errors -->
+                  @if ($errors->any())
+                      <div class="alert alert-danger">
+                          <ul>
+                              @foreach ($errors->all() as $error)
+                                  <li>{{ $error }}</li>
+                              @endforeach
+                          </ul>
+                      </div>
+                  @endif
 
                 </div>
               </div>

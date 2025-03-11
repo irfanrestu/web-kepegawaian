@@ -39,9 +39,9 @@
                                             <div class="blog-item-content bg-white p-5">
                                                 @empty($post->thumbnail)
                                                     <img src="{{url('image/nophoto.jpg')}}"
-                                                        alt="project-image" class="rounded" style="width: 100%; max-width: 360px; height: auto;">
+                                                        alt="project-image" class="rounded" style="width: 100%; max-width: 400px; height: 250px;">
                                                 @else
-                                                    <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 400px; height: auto;">
+                                                    <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="Foto Pegawai" class="rounded" style="width: 100%; max-width: 400px; height: 250px;">
                                                 @endempty
                                                     <div class="blog-item-meta bg-gray py-1 px-2">
                                                         <span class="text-muted text-capitalize mr-3"><i class="bi bi-person"> {{$post->user->name}} </i></span>

@@ -43,19 +43,19 @@ class PegawaiController extends Controller
             'nama_lengkap' => 'required|string|max:255',
             'gelar_depan' => 'nullable|string|max:255',
             'gelar_belakang' => 'nullable|string|max:255',
-            'nip' => 'required|string|max:255',
+            'nip' => 'required|string|max:255|unique:pegawais,nip',
             'npwp' => 'nullable|string|max:255',
             'no_karpeg' => 'nullable|string|max:255',
             'no_bpjs' => 'nullable|string|max:255',
             'no_kartu_keluarga' => 'nullable|string|max:255',
-            'no_nik' => 'required|string|max:255',
-            'id_status_pegawai' => 'required|integer',
+            'no_nik' => 'required|string|max:255|unique:pegawais,no_nik',
+            'id_status_pegawai' => 'required|integer|exists:status_pegawais,status_pegawai_id',
             'tempat_lahir' => 'required|string|max:255',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|string|max:255',
-            'id_agama' => 'required|integer',
+            'jenis_kelamin' => 'required|string|in:Laki-laki,Perempuan',
+            'id_agama' => 'required|integer|exists:agamas,agama_id',
             'no_hp' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => 'required|email|max:255|unique:pegawais,email',
             'alamat_lengkap' => 'required|string',
             'rt' => 'required|string|max:255',
             'rw' => 'required|string|max:255',
@@ -64,6 +64,36 @@ class PegawaiController extends Controller
             'kota_kabupaten' => 'required|string|max:255',
             'kode_pos' => 'required|string|max:255',
             'homebase' => 'required|string|max:255',
+        ], [
+            'file_foto.image' => 'File harus berupa gambar.',
+            'file_foto.mimes' => 'Format file yang diperbolehkan: jpeg, png, jpg, gif.',
+            'file_foto.max' => 'Ukuran file tidak boleh lebih dari 2MB.',
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'no_nik.required' => 'NIK wajib diisi.',
+            'no_nik.unique' => 'NIK sudah digunakan.',
+            'id_status_pegawai.required' => 'Status pegawai wajib dipilih.',
+            'id_status_pegawai.exists' => 'Status pegawai tidak valid.',
+            'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
+            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
+            'tanggal_lahir.date' => 'Format tanggal lahir tidak valid.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.in' => 'Jenis kelamin harus Laki-laki atau Perempuan.',
+            'id_agama.required' => 'Agama wajib dipilih.',
+            'id_agama.exists' => 'Agama tidak valid.',
+            'no_hp.required' => 'Nomor HP wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
+            'rt.required' => 'RT wajib diisi.',
+            'rw.required' => 'RW wajib diisi.',
+            'kelurahan.required' => 'Kelurahan wajib diisi.',
+            'kecamatan.required' => 'Kecamatan wajib diisi.',
+            'kota_kabupaten.required' => 'Kabupaten/Kota wajib diisi.',
+            'kode_pos.required' => 'Kode pos wajib diisi.',
+            'homebase.required' => 'Homebase wajib diisi.',
         ]);
 
         // Handle file upload
@@ -104,7 +134,7 @@ class PegawaiController extends Controller
             'homebase' => $request->homebase,
         ]);
 
-        return redirect('/pegawai/biodata')->with('status', 'Pegawai berhasil dibuat');
+        return redirect()->route('data_pegawai.index')->with('success', 'Data Pegawai Berhasil Dibuat');
     }
 
     public function edit(Pegawai $pegawai)
@@ -117,35 +147,72 @@ class PegawaiController extends Controller
 
     public function update(Request $request, Pegawai $pegawai)
     {
+        $user = $pegawai->user;
         // Validate the request data
         $request->validate([
+            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_lengkap' => 'required|string|max:255',
-            'gelar_depan' => 'nullable|string|max:50',
-            'gelar_belakang' => 'nullable|string|max:50',
-            'nip' => 'nullable|string|max:50',
-            'npwp' => 'nullable|string|max:50',
-            'no_karpeg' => 'nullable|string|max:50',
-            'no_bpjs' => 'nullable|string|max:50',
-            'no_kartu_keluarga' => 'nullable|string|max:50',
-            'no_nik' => 'nullable|string|max:50',
-            'id_status_pegawai' => 'required|exists:status_pegawais,status_pegawai_id',
-            'tempat_lahir' => 'nullable|string|max:100',
-            'tanggal_lahir' => 'nullable|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'id_agama' => 'required|exists:agamas,agama_id',
-            'no_hp' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'alamat_lengkap' => 'nullable|string',
-            'rt' => 'nullable|string|max:10',
-            'rw' => 'nullable|string|max:10',
-            'kelurahan' => 'nullable|string|max:100',
-            'kecamatan' => 'nullable|string|max:100',
-            'kota_kabupaten' => 'nullable|string|max:100',
-            'kode_pos' => 'nullable|string|max:10',
-            'homebase' => 'nullable|string|max:100',
-            'file_foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gelar_depan' => 'nullable|string|max:255',
+            'gelar_belakang' => 'nullable|string|max:255',
+            'nip' => 'required|string|max:255|unique:pegawais,nip,' . $pegawai->pegawai_id . ',pegawai_id',
+            'npwp' => 'nullable|string|max:255',
+            'no_karpeg' => 'nullable|string|max:255',
+            'no_bpjs' => 'nullable|string|max:255',
+            'no_kartu_keluarga' => 'nullable|string|max:255',
+            'no_nik' => 'required|string|max:255|unique:pegawais,no_nik,' . $pegawai->pegawai_id . ',pegawai_id',
+            'id_status_pegawai' => 'required|integer|exists:status_pegawais,status_pegawai_id',
+            'tempat_lahir' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|string|in:Laki-laki,Perempuan',
+            'id_agama' => 'required|integer|exists:agamas,agama_id',
+            'no_hp' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:pegawais,email,' . $pegawai->pegawai_id . ',pegawai_id',
+            'email' => 'required|email|max:255|unique:users,email,'. $user->id . ',id',
+            'alamat_lengkap' => 'required|string',
+            'rt' => 'required|string|max:255',
+            'rw' => 'required|string|max:255',
+            'kelurahan' => 'required|string|max:255',
+            'kecamatan' => 'required|string|max:255',
+            'kota_kabupaten' => 'required|string|max:255',
+            'kode_pos' => 'required|string|max:255',
+            'homebase' => 'required|string|max:255',
             'remove_photo' => 'nullable|boolean',
+        ], [
+            'file_foto.image' => 'File harus berupa gambar.',
+            'file_foto.mimes' => 'Format file yang diperbolehkan: jpeg, png, jpg, gif.',
+            'file_foto.max' => 'Ukuran file tidak boleh lebih dari 2MB.',
+            'nama_lengkap.required' => 'Nama lengkap wajib diisi.',
+            'nip.required' => 'NIP wajib diisi.',
+            'nip.unique' => 'NIP sudah digunakan.',
+            'no_nik.required' => 'NIK wajib diisi.',
+            'no_nik.unique' => 'NIK sudah digunakan.',
+            'id_status_pegawai.required' => 'Status pegawai wajib dipilih.',
+            'id_status_pegawai.exists' => 'Status pegawai tidak valid.',
+            'tempat_lahir.required' => 'Tempat lahir wajib diisi.',
+            'tanggal_lahir.required' => 'Tanggal lahir wajib diisi.',
+            'tanggal_lahir.date' => 'Format tanggal lahir tidak valid.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.in' => 'Jenis kelamin harus Laki-laki atau Perempuan.',
+            'id_agama.required' => 'Agama wajib dipilih.',
+            'id_agama.exists' => 'Agama tidak valid.',
+            'no_hp.required' => 'Nomor HP wajib diisi.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah digunakan.',
+            'alamat_lengkap.required' => 'Alamat lengkap wajib diisi.',
+            'rt.required' => 'RT wajib diisi.',
+            'rw.required' => 'RW wajib diisi.',
+            'kelurahan.required' => 'Kelurahan wajib diisi.',
+            'kecamatan.required' => 'Kecamatan wajib diisi.',
+            'kota_kabupaten.required' => 'Kabupaten/Kota wajib diisi.',
+            'kode_pos.required' => 'Kode pos wajib diisi.',
+            'homebase.required' => 'Homebase wajib diisi.',
         ]);
+
+        // Add email validation only if the email is being changed
+        if ($request->email !== $user->email) {
+            $rules['email'] = 'required|email|max:255|unique:users,email,' . $user->id;
+        }
 
         // Handle profile photo update
         if ($request->hasFile('file_foto')) {
@@ -189,13 +256,18 @@ class PegawaiController extends Controller
             'homebase' => $request->input('homebase'),
         ]);
 
+        $user->update([
+            'name' => $request->input('nama_lengkap'),
+            'email' => $request->input('email'),
+        ]);
+
         return back()->with('success', 'Data Pegawai berhasil diperbarui.');
     }
 
-    public function destroy(Pegawai $pegawai_id)
+    public function destroy(Pegawai $pegawai)
     {
-        $pegawai_id->delete();
-        return redirect()->route('biodata.index')->with('success', 'Data berhasil di hapus');
+        $pegawai->delete();
+        return redirect()->route('data_pegawai.index')->with('success', 'Data berhasil di hapus');
     }
 
     public function profile(Pegawai $pegawai)
@@ -220,7 +292,7 @@ class PegawaiController extends Controller
 
         // Check if the current password matches
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'The current password is incorrect.']);
+            return back()->withErrors(['current_password' => 'Password sekarang salah.']);
         }
 
         // Update the password
@@ -228,7 +300,7 @@ class PegawaiController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
 
-        return back()->with('success', 'Password changed successfully.');
+        return back()->with('success', 'Password berhasil diubah.');
     }
 
     public function changeRole(Request $request, $pegawai)
@@ -246,7 +318,7 @@ class PegawaiController extends Controller
             'id_role' => $request->role_id,
         ]);
 
-        return back()->with('success', 'Role updated successfully.');
+        return back()->with('success', 'Role berhasil diubah.');
     }
 
   

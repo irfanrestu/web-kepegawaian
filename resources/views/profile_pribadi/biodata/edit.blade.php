@@ -94,6 +94,7 @@
                                         <div class="row mb-3">
                                             <label for="id_status_pegawai" class="col-md-4 col-lg-3 col-form-label">Status Pegawai</label>
                                             <div class="col-md-8 col-lg-9">
+                                            @if($user->role_id == 1) <!-- Check if the user is an Admin -->
                                                 <select name="id_status_pegawai" id="id_status_pegawai" class="form-control">
                                                     @foreach($liststatuspegawai as $status)
                                                         <option value="{{ $status->status_pegawai_id }}" {{ $user->pegawai->id_status_pegawai == $status->status_pegawai_id ? 'selected' : '' }}>
@@ -101,6 +102,11 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                            @else
+                                                <!-- Display the status as a read-only field for non-admin users -->
+                                                <input type="text" class="form-control" value="{{ $user->pegawai->statusPegawai->status_pegawai }}" readonly>
+                                                <input type="hidden" name="id_status_pegawai" value="{{ $user->pegawai->id_status_pegawai }}">
+                                            @endif
                                             </div>
                                         </div>
 

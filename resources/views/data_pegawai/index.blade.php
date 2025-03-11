@@ -13,6 +13,22 @@
     </nav>
     </div><!-- End Page Title -->
 
+    @if(session('success'))
+            <div class="alert alert-success">
+            {{ session('success') }}
+            </div>
+            @endif
+
+            @if($errors->any())
+            <div class="alert alert-danger">
+            <ul>
+            @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+            @endforeach
+                    </ul>
+                </div>
+            @endif
+
     <section class="section">
     <div class="row">
       <div class="col-lg-12">
@@ -20,21 +36,8 @@
         <div class="card">
         <div class="card-body">
           <h5 class="card-title">Table Biodata Pegawai</h5>
-          @if(session('success'))
-        <div class="alert alert-success">
-        {{ session('success') }}
-        </div>
-      @endif
 
-          @if($errors->any())
-        <div class="alert alert-danger">
-        <ul>
-        @foreach($errors->all() as $error)
-      <li>{{ $error }}</li>
-    @endforeach
-        </ul>
-        </div>
-      @endif
+      
           <a href="{{ route('biodata.create') }}" class="btn btn-sm btn-primary">Tambah data</a>
           <!-- Table with hoverable rows -->
           <table class="table table-hover">

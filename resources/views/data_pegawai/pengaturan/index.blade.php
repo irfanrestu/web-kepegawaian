@@ -38,6 +38,7 @@
 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <h3>{{ $pegawai->user->role->nama_role }}</h3>
                             @empty($pegawai->file_foto)
                                 <img src="{{url('image/nophoto.jpg')}}" alt="project-image" class="rounded"
                                     style="width: 100%; max-width: 100px; height: auto;">

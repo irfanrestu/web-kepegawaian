@@ -18,6 +18,12 @@ class PostController extends Controller
         return view('post.index', compact('user', 'posts')); 
         
     }
+
+    public function create()
+    {
+        return view('post.create');
+    }
+
     public function store(Request $request)
 {
     // Validate the request data

@@ -40,8 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Rute Data Biodata pegawai
     Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');
-    Route::get('/pegawai/biodata/create', [PegawaiController::class, 'create'])->name('biodata.create');
-    Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
+   
     Route::get('/pegawai/biodata/edit/{pegawai}', [PegawaiController::class, 'edit'])->name('biodata.edit');
     Route::put('/pegawai/biodata/{pegawai}', [PegawaiController::class, 'update'])->name('biodata.update');
     Route::get('/pegawai/biodata/profile{pegawai}', [PegawaiController::class, 'profile'])->name('biodata.profile');
@@ -51,6 +50,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Fitur exclusive untuk admin
     Route::middleware('admin')->group(function () {
         Route::put('/pegawai/{pegawai}/change-role', [PegawaiController::class, 'changeRole'])->name('pegawai.change-role');
+        Route::get('/pegawai/biodata/create', [PegawaiController::class, 'create'])->name('biodata.create');
+        Route::post('/pegawai/biodata/store', [PegawaiController::class, 'store'])->name('biodata.store');
     });
 
 

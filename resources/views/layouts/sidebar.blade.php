@@ -27,7 +27,7 @@
         <!-- End Data Pegawai Nav Admin -->
 
         
-        <li class="nav-item">
+        <!--<li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#"
                 aria-expanded="false">
                 <i class="bi bi-layout-text-window-reverse"></i><span>Data Pegawai</span><i
@@ -55,7 +55,7 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li>-->
         <!-- End Data Pegawai Nav Pegawai -->
         @endif
 
