@@ -73,23 +73,7 @@ class DokumenController extends Controller
      */
     public function edit(Dokumen $dokumen, $id)
     {
-        $user = auth()->user();
-        $pegawai = Pegawai::findOrFail($id);
-
-        // Cek otorisasi: Admin bisa mengedit semua data, pegawai hanya bisa mengedit data miliknya
-        if ($user->id_role != 1 && $pegawai->pegawai_id != $user->id_pegawai) {
-            return redirect()->route('dokumen_pendukung.index')
-                ->with('error', 'Anda tidak memiliki akses untuk mengedit data ini.');
-        }
-
-        // Ambil dokumen yang diunggah oleh pegawai tertentu
-        $uploadedDokumens = $pegawai->dokumens()
-            ->pluck('file_dokumen', 'id_kategori_dokumen')
-            ->toArray();
-
-        $kategoriDokumens = KategoriDokumen::all();
-
-        return view('dokumen_pendukung.edit', compact('pegawai', 'kategoriDokumens', 'uploadedDokumens'));
+        //
     }
 
     /**

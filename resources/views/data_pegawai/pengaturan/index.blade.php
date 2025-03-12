@@ -38,7 +38,7 @@
 
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                        <h3>{{ $pegawai->user->role->nama_role }}</h3>
+                            <h3>{{ $pegawai->user->role->nama_role }}</h3>
                             @empty($pegawai->file_foto)
                                 <img src="{{url('image/nophoto.jpg')}}" alt="project-image" class="rounded"
                                     style="width: 100%; max-width: 100px; height: auto;">
@@ -49,12 +49,6 @@
 
                             <h2>{{ $pegawai->nama_lengkap }}</h2>
                             <h3>{{ $pegawai->statuspegawai->status_pegawai }}</h3>
-                            <div class="social-links mt-2">
-                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                            </div>
                         </div>
                     </div>
 

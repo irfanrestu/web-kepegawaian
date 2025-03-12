@@ -36,11 +36,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/data_pegawai', [DataPegawaiController::class, 'index'])->name('data_pegawai.index');
     Route::get('/data_pegawai/pegaturan{pegawai}', [DataPegawaiController::class, 'pengaturan'])->name('data_pegawai.pegaturan');
 
-    
+
 
     // Rute Data Biodata pegawai
     Route::get('pegawai/biodata', [PegawaiController::class, 'index'])->name('biodata.index');
-   
+
     Route::get('/pegawai/biodata/edit/{pegawai}', [PegawaiController::class, 'edit'])->name('biodata.edit');
     Route::put('/pegawai/biodata/{pegawai}', [PegawaiController::class, 'update'])->name('biodata.update');
     Route::get('/pegawai/biodata/profile{pegawai}', [PegawaiController::class, 'profile'])->name('biodata.profile');
@@ -79,9 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/dokumen_pendukung', [DokumenController::class, 'index'])->name('dokumen_pendukung.index');
     Route::get('/dokumen_pendukung/admin', [DokumenController::class, 'index'])->name('dokumen_pendukung.admin');
-    Route::get('/dokumen_pendukung/edit{id}', [DokumenController::class, 'edit'])->name('dokumen_pendukung.edit');
     Route::put('/dokumen_pendukung/update/{id}', [DokumenController::class, 'update'])->name('dokumen_pendukung.update');
-    Route::delete('/dokumen_pendukung/delete{id}', [DokumenController::class, 'destroy'])->name('dokumen_pendukung.destroy');
     //Akhir bagian halaman Dokumen Pendukung
 
     //Fitur melihat informasi
