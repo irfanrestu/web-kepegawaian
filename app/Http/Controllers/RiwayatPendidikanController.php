@@ -180,16 +180,13 @@ class RiwayatPendidikanController extends Controller
 
             $riwayatPendidikan->update($data);
 
-            return redirect()->route('riwayat_pendidikan.index')
-                ->with('success', 'Data berhasil diperbarui!');
+            return back()->with('success', 'Data berhasil diperbaharui!');
 
         } catch (\Exception $e) {
             $jenjangPendidikans = JenjangPendidikan::all();
             $jurusans = Jurusan::all();
 
-            return redirect()->route('riwayat_pendidikan.edit', $id)
-                ->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())
-                ->withInput();
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())->withInput();
         }
     }
 

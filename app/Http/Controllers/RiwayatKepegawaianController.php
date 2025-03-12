@@ -157,8 +157,7 @@ class RiwayatKepegawaianController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('riwayat_kepegawaian.index')
-                ->with('success', 'Data riwayat kepegawaian berhasil ditambahkan!');
+            return back()->with('success', 'Data berhasil diunggah!');
         } catch (\Exception $e) {
             DB::rollBack();
 
@@ -324,12 +323,9 @@ class RiwayatKepegawaianController extends Controller
             $riwayatGolongan->update($golonganData);
             $riwayatKepegawaian->update($kepegawaianData);
 
-            return redirect()->route('riwayat_kepegawaian.index')
-                ->with('success', 'Data riwayat kepegawaian berhasil diperbarui!');
+            return back()->with('success', 'Data berhasil diperbaharui!');
         } catch (\Exception $e) {
-            return redirect()->route('riwayat_kepegawaian.edit')
-                ->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())
-                ->withInput();
+            return back()->with('error', 'Terjadi kesalahan saat memperbarui data: ' . $e->getMessage())->withInput();
         }
     }
 

@@ -21,6 +21,12 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Edit Data Pendidikan</h5>
+                            @if (session('success'))
+                                            <div class="alert alert-success">{{ session('success') }}</div>
+                                        @endif
+                                        @if (session('error'))
+                                            <div class="alert alert-danger">{{ session('error') }}</div>
+                                        @endif
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -127,7 +133,7 @@
                                 <div class="row">
                                     <div class="col-md-12 text-center mt-4">
                                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                        <a href="{{ route('riwayat_pendidikan.index') }}" class="btn btn-secondary">Kembali</a>
+                                        <a href="{{ url('/profile_pribadi/') }}" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </div>
                             </form>

@@ -189,6 +189,7 @@
                             
                                     <div class="col-md-12 text-center mt-4">
                                         <button type="submit" class="btn btn-primary">Update</button>
+                                        <a href="{{ url('/profile_pribadi/') }}" class="btn btn-primary">Kembali</a>
                                     </div>
                                 </div>
                             </form>
