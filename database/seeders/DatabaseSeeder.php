@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             JenisJabatansSeeder::class,
             UnitsSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }
