@@ -49,7 +49,7 @@
                                                         <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i>{{ $post->created_at->format('d M Y') }}</span>
                                                     </div> 
                                                 <div class="blog-item-content1">
-                                                    <h3 class="mt-3 mb-3"><a href="blog-single.html">{{$post->judul}}</a></h3>
+                                                    <h3 class="mt-3 mb-3"><a href="{{Route('post.singlepost', $post->slug)}}">{{$post->judul}}</a></h3>
                                                     <p class="mb-4">{!!$post->content!!}</p>
                                                 </div>
                                                     <a href="{{Route('post.singlepost', $post->slug)}}" class="btn btn-secondary rounded-pill">Learn More</a>
